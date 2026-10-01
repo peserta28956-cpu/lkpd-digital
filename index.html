@@ -7,8 +7,8 @@
 
   <!-- Firebase SDK & Database Firestore -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCothCII7K3jEIzdGSgm_GqWwPCPujAUkw",
@@ -24,8 +24,13 @@
 
     // Daftarkan ke global window agar bisa diakses seluruh fungsi aplikasi
     window.db = db;
-    window.firebaseFirestore = { doc, setDoc, getDoc, onSnapshot };
-    console.log("Firebase & Firestore Siap Terhubung!");
+    window.firebaseFirestore = { doc, setDoc, getDoc, onSnapshot, collection, getDocs };
+    console.log("Firebase & Firestore Siap Terhubung Online!");
+
+    // Trigger realtime sync saat Firebase siap
+    if (window.startOnlineSync) {
+      window.startOnlineSync();
+    }
   </script>
 
   <!-- Tailwind CSS -->
@@ -61,7 +66,6 @@
       }
     };
   </script>
-</head>
 
   <!-- Google Fonts & FontAwesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1350,6 +1354,7 @@
       },
       currentView: 'dashboard',
       allGroups: [],
+      onlineDataMap: {}, // Map menyimpan data tugas seluruh kelompok dari Firebase
       selectedGroupId: '',
       project: {
         title: '',
@@ -1408,51 +1413,30 @@
       }
     };
 
-    window.onload = function() {
-      loadSavedSession();
-      initIdeForm();
-      renderShotTable();
-      renderStoryboardGrid();
-      renderShootingChecklist();
-      renderRubricEvaluasi();
-      updateProgressMetrics();
-    };
+    function loadSavedSession() {
+      try {
+        const savedUser = localStorage.getItem('s2v_session');
+        const savedProject = localStorage.getItem('s2v_project');
+        const savedGroups = localStorage.getItem('s2v_groups');
 
-   async function saveSessionToStorage() {
-  try {
-    localStorage.setItem('s2v_session', JSON.stringify(AppState.currentUser));
-    localStorage.setItem('s2v_project', JSON.stringify(AppState.project));
-    localStorage.setItem('s2v_groups', JSON.stringify(AppState.allGroups));
+        if (savedUser) {
+          AppState.currentUser = JSON.parse(savedUser);
+        }
+        if (savedProject) {
+          AppState.project = JSON.parse(savedProject);
+        }
+        if (savedGroups) {
+          AppState.allGroups = JSON.parse(savedGroups);
+        }
 
-    // Kirim juga secara online ke Cloud Firestore secara otomatis
-    if (window.db && window.firebaseFirestore && AppState.currentUser) {
-      const groupKey = AppState.currentUser.groupName || AppState.currentUser.name || "kelompok_umum";
-      await window.firebaseFirestore.setDoc(
-        window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", groupKey),
-        {
-          currentUser: AppState.currentUser,
-          project: AppState.project,
-          updatedAt: new Date().toISOString()
-        },
-        { merge: true }
-      );
-      console.log("Data berhasil disinkronkan ke server online!");
-    }
-  } catch(e) {
-    console.warn("Storage quota limit reached, applying fallback saving strategy:", e);
-    try {
-      const projectCopy = JSON.parse(JSON.stringify(AppState.project));
-      if (projectCopy.submission) {
-        delete projectCopy.submission.localVideoUrl;
+        if (AppState.currentUser && AppState.currentUser.name) {
+          restoreUserUI(AppState.currentUser);
+        }
+      } catch (e) {
+        console.warn("Error loading saved session:", e);
       }
-      localStorage.setItem('s2v_project', JSON.stringify(projectCopy));
-    } catch (fallbackErr) {
-      console.error("Critical storage quota error:", fallbackErr);
     }
-  }
-}
 
-    /* Helper function to compress images using Canvas */
     function compressImage(file, maxWidth, quality, callback) {
       const reader = new FileReader();
       reader.onload = function(e) {
@@ -1461,58 +1445,189 @@
           const canvas = document.createElement('canvas');
           let width = img.width;
           let height = img.height;
+
           if (width > maxWidth) {
             height = Math.round((height * maxWidth) / width);
             width = maxWidth;
           }
+
           canvas.width = width;
           canvas.height = height;
+
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL('image/jpeg', quality);
-          callback(dataUrl);
-        };
-        img.onerror = function() {
-          callback(e.target.result);
+
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+          callback(compressedDataUrl);
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
 
-    function loadSavedSession() {
-      try {
-        const savedUser = localStorage.getItem('s2v_session');
-        const savedProject = localStorage.getItem('s2v_project');
-        const savedGroups = localStorage.getItem('s2v_groups');
+    window.onload = function() {
+      loadSavedSession();
+      initIdeForm();
+      renderShotTable();
+      renderStoryboardGrid();
+      renderShootingChecklist();
+      renderRubricEvaluasi();
+      updateProgressMetrics();
 
-        if (savedProject) {
-          AppState.project = JSON.parse(savedProject);
-        }
+      if (window.startOnlineSync) {
+        window.startOnlineSync();
+      }
+    };
 
-        if (savedGroups) {
-          AppState.allGroups = JSON.parse(savedGroups);
-        }
+    window.startOnlineSync = function() {
+      if (!window.db || !window.firebaseFirestore) return;
 
-        if (savedUser) {
-          AppState.currentUser = JSON.parse(savedUser);
-          
-          if (AppState.currentUser.role === 'siswa') {
-            const kelompokEl = document.getElementById('siswa-kelompok');
-            const kelasEl = document.getElementById('siswa-kelas');
-            const anggotaEl = document.getElementById('siswa-anggota');
-            if (kelompokEl) kelompokEl.value = AppState.currentUser.name || '';
-            if (kelasEl) kelasEl.value = AppState.currentUser.class || '';
-            if (anggotaEl) anggotaEl.value = AppState.currentUser.members || '';
+      const { collection, onSnapshot } = window.firebaseFirestore;
+      const colRef = collection(window.db, "pengiriman_tugas_siswa");
+
+      onSnapshot(colRef, (snapshot) => {
+        AppState.onlineDataMap = {};
+        const newGroupsList = [];
+
+        snapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          if (data && data.currentUser) {
+            const gName = data.currentUser.name || docSnap.id;
+            const gId = docSnap.id;
+            
+            AppState.onlineDataMap[gId] = data;
+
+            // Hitung persen progres kelompok
+            let progressVal = '0%';
+            if (data.project) {
+              let points = 0;
+              if (data.project.title) points += 15;
+              if (data.project.synopsis) points += 15;
+              if (data.project.shotList && data.project.shotList.length > 0) points += 20;
+              if (data.project.storyboard && data.project.storyboard.length > 0) points += 20;
+              if (data.project.shootingPreprod && data.project.shootingProd) {
+                const pre = data.project.shootingPreprod.filter(i => i.checked).length;
+                const prod = data.project.shootingProd.filter(i => i.checked).length;
+                points += Math.round(((pre + prod) / 10) * 15);
+              }
+              if (data.project.submission && data.project.submission.submitted) points += 15;
+              progressVal = `${Math.min(100, points)}%`;
+            }
+
+            newGroupsList.push({
+              id: gId,
+              name: gName,
+              class: data.currentUser.class || 'SMK Broadcast',
+              members: data.currentUser.members || '-',
+              progress: progressVal,
+              status: data.project && data.project.submission && data.project.submission.submitted ? 'Karya Terkumpul' : 'Proses Produksi'
+            });
+
+            // Sinkronkan balik nilai/catatan guru ke kelompok siswa yang sedang aktif
+            if (AppState.currentUser.role === 'siswa' && AppState.currentUser.name === gName) {
+              if (data.project && data.project.evaluation) {
+                AppState.project.evaluation = data.project.evaluation;
+                renderRubricEvaluasi();
+              }
+            }
           }
+        });
 
-          restoreUserUI(AppState.currentUser);
+        if (newGroupsList.length > 0) {
+          AppState.allGroups = newGroupsList;
+          if (!AppState.selectedGroupId) {
+            AppState.selectedGroupId = newGroupsList[0].id;
+          }
+        }
+
+        // Segarkan tampilan jika sedang aktif
+        if (AppState.currentView === 'guru_portal') {
+          renderGuruFullReview();
+        } else if (AppState.currentView === 'galeri') {
+          renderGalleryCards();
+        }
+
+        const statusBadge = document.getElementById('autosave-status');
+        if (statusBadge) {
+          statusBadge.innerHTML = `<span class="tally-green"></span><span class="hidden sm:inline">ONLINE SYNC</span>`;
+        }
+      }, (err) => {
+        console.warn("Firestore realtime sync listener:", err);
+      });
+    };
+
+    async function saveSessionToStorage() {
+      try {
+        localStorage.setItem('s2v_session', JSON.stringify(AppState.currentUser));
+        localStorage.setItem('s2v_project', JSON.stringify(AppState.project));
+        localStorage.setItem('s2v_groups', JSON.stringify(AppState.allGroups));
+
+        // Kirim data kelompok ke Cloud Firestore secara online
+        if (window.db && window.firebaseFirestore && AppState.currentUser && AppState.currentUser.role === 'siswa' && AppState.currentUser.name) {
+          const sanitizedDocId = AppState.currentUser.name.replace(/[\/\#\?\:\s]/g, '_').toLowerCase();
+          const docRef = window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", sanitizedDocId);
+          
+          const payload = {
+            currentUser: AppState.currentUser,
+            project: AppState.project,
+            updatedAt: new Date().toISOString()
+          };
+
+          await window.firebaseFirestore.setDoc(docRef, payload, { merge: true });
+          console.log("Data kelompok berhasil disinkronkan ke server Firebase online!");
         }
       } catch(e) {
-        console.error("Failed to load session from localStorage:", e);
+        console.warn("Storage/Firebase quota or connection handling:", e);
       }
     }
+// Sinkronisasi Real-Time Firestore untuk Portal Guru & Siswa
+    function initRealtimeSync() {
+      if (window.db && window.firebaseFirestore) {
+        try {
+          const { collection, onSnapshot } = window.firebaseFirestore;
+          
+          onSnapshot(collection(window.db, "pengiriman_tugas_siswa"), (snapshot) => {
+            let newGroupsList = [];
+            
+            snapshot.forEach((docSnap) => {
+              const data = docSnap.data();
+              const docId = docSnap.id;
+              
+              if (data && data.currentUser) {
+                newGroupsList.push({
+                  id: docId,
+                  name: data.currentUser.name || docId,
+                  class: data.currentUser.class || 'Kelas',
+                  members: data.currentUser.members || '-',
+                  progress: '100%',
+                  status: 'Terkumpul Online'
+                });
+              }
+            });
 
+            if (newGroupsList.length > 0) {
+              AppState.allGroups = newGroupsList;
+              if (!AppState.selectedGroupId) {
+                AppState.selectedGroupId = newGroupsList[0].id;
+              }
+            }
+
+            if (AppState.currentView === 'guru_portal') {
+              renderGuruFullReview();
+            } else if (AppState.currentView === 'galeri') {
+              renderGalleryCards();
+            }
+
+            const statusBadge = document.getElementById('autosave-status');
+            if (statusBadge) {
+              statusBadge.innerHTML = `<span class="tally-green"></span><span class="hidden sm:inline">ONLINE SYNC</span>`;
+            }
+          });
+        } catch (e) {
+          console.warn("Realtime sync error:", e);
+        }
+      }
+    }
     function restoreUserUI(user) {
       document.getElementById('user-display-name').textContent = user.name || 'Belum Login';
       document.getElementById('user-display-role').textContent = `${user.role === 'guru' ? 'Guru Pembimbing' : (user.class || '-')}`;
@@ -1941,6 +2056,12 @@
 
     function switchStudentReview(groupId) {
       AppState.selectedGroupId = groupId;
+      if (AppState.onlineDataMap && AppState.onlineDataMap[groupId]) {
+        const onlineGroup = AppState.onlineDataMap[groupId];
+        if (onlineGroup.project) {
+          AppState.project = JSON.parse(JSON.stringify(onlineGroup.project));
+        }
+      }
       const targetGroup = AppState.allGroups.find(g => g.id === groupId);
       if (targetGroup) {
         showToast(`Memuat tugas ${targetGroup.name} (${targetGroup.members})...`, 'info');
@@ -1948,14 +2069,23 @@
       renderGuruFullReview();
     }
 
-    function saveGuruAssessment() {
+    async function saveGuruAssessment() {
       const feedbackInput = document.getElementById('guru-feedback-input');
       const evalElem = document.getElementById('eval-feedback-text');
       if (feedbackInput && evalElem) {
         evalElem.value = feedbackInput.value;
       }
+
+      const selectedId = AppState.selectedGroupId;
+      if (selectedId && AppState.onlineDataMap[selectedId] && window.db && window.firebaseFirestore) {
+        const docRef = window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", selectedId);
+        await window.firebaseFirestore.setDoc(docRef, {
+          project: { evaluation: AppState.project.evaluation }
+        }, { merge: true });
+      }
+
       saveSessionToStorage();
-      showToast('Penilaian & Feedback Guru berhasil tersimpan!', 'success');
+      showToast('Penilaian & Feedback Guru berhasil disinkronkan secara online!', 'success');
     }
 
     function toggleSidebar() {
@@ -2612,7 +2742,29 @@
 
       let galleryList = [];
 
-      if (AppState.project.submission && AppState.project.submission.localVideoUrl) {
+      // Ambil seluruh data proyek kelompok dari Firebase online
+      if (AppState.onlineDataMap && Object.keys(AppState.onlineDataMap).length > 0) {
+        Object.keys(AppState.onlineDataMap).forEach((key) => {
+          const itemData = AppState.onlineDataMap[key];
+          if (itemData && itemData.project && itemData.project.submission && itemData.project.submission.submitted) {
+            galleryList.push({
+              id: key,
+              title: itemData.project.submission.videoTitle || itemData.project.title || 'Karya Video Kelompok',
+              groupName: itemData.currentUser.name || 'Kelompok Siswa',
+              groupClass: itemData.currentUser.class || 'SMK Broadcast',
+              members: itemData.project.submission.teamMembers || itemData.currentUser.members || 'Anggota Kelompok',
+              genre: itemData.project.genre || 'Iklan Komersial / Promosi',
+              synopsis: itemData.project.synopsis || itemData.project.highConcept || 'Video produksi karya siswa SMK.',
+              videoUrl: itemData.project.submission.localVideoUrl,
+              posterUrl: itemData.project.submission.posterUrl || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&auto=format&fit=crop&q=80',
+              likes: itemData.project.submission.likes || 12
+            });
+          }
+        });
+      }
+
+      // Cadangan lokal jika proyek sendiri sudah terkumpul
+      if (galleryList.length === 0 && AppState.project.submission && AppState.project.submission.submitted && AppState.project.submission.localVideoUrl) {
         galleryList.push({
           id: 'submitted-current',
           title: AppState.project.submission.videoTitle || AppState.project.title || 'Karya Video Kelompok',
@@ -2620,7 +2772,7 @@
           groupClass: AppState.currentUser.class || 'SMK Broadcast',
           members: AppState.project.submission.teamMembers || AppState.currentUser.members || 'Anggota Kelompok',
           genre: AppState.project.genre || 'Iklan Komersial / Promosi',
-          synopsis: AppState.project.synopsis || AppState.project.highConcept || 'Video produksi karya siswa SMK jurusan Broadcasting & Perfilman.',
+          synopsis: AppState.project.synopsis || AppState.project.highConcept || 'Video produksi karya siswa SMK.',
           videoUrl: AppState.project.submission.localVideoUrl,
           posterUrl: AppState.project.submission.posterUrl || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&auto=format&fit=crop&q=80',
           likes: 12
@@ -2643,7 +2795,7 @@
           <div class="col-span-full p-12 text-center glass-card rounded-3xl border border-white/10 font-mono text-xs text-slate-500">
             <i class="fa-solid fa-photo-film text-5xl mb-3 text-slate-700 block"></i>
             <span class="text-slate-300 font-bold block mb-1">Belum Ada Karya Video Terpublikasi</span>
-            <span>Unggah file video kamu di menu <b>Final Video Submission</b> agar karya kelompokmu tampil di bioskop galeri ini!</span>
+            <span>Unggah file video kamu di menu <b>Final Video Submission</b> agar karya kelompokmu tampil di bioskop galeri ini secara online!</span>
           </div>
         `;
         return;
@@ -2693,13 +2845,20 @@
       });
     }
 
-    function filterGalleryProjects() {
-      renderGalleryCards();
-    }
-
     function openGaleriModal(projId) {
       let item = null;
-      if (projId === 'submitted-current') {
+      if (AppState.onlineDataMap && AppState.onlineDataMap[projId]) {
+        const itemData = AppState.onlineDataMap[projId];
+        item = {
+          id: projId,
+          title: itemData.project.submission.videoTitle || itemData.project.title || 'Karya Video Kelompok',
+          groupName: itemData.currentUser.name || 'Kelompok Siswa',
+          members: itemData.project.submission.teamMembers || itemData.currentUser.members || 'Anggota Kelompok',
+          synopsis: itemData.project.synopsis || itemData.project.highConcept || 'Video karya produksi siswa SMK.',
+          videoUrl: itemData.project.submission.localVideoUrl,
+          likes: itemData.project.submission.likes || 12
+        };
+      } else if (projId === 'submitted-current') {
         item = {
           id: 'submitted-current',
           title: AppState.project.submission.videoTitle || AppState.project.title || 'Karya Video Kelompok',
