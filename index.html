@@ -22,12 +22,11 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Daftarkan ke global window agar bisa diakses seluruh fungsi aplikasi
+    // Register Firestore globals
     window.db = db;
     window.firebaseFirestore = { doc, setDoc, getDoc, onSnapshot, collection, getDocs };
-    console.log("Firebase & Firestore Siap Terhubung Online!");
+    console.log("Firebase & Firestore Online Engine Ready!");
 
-    // Trigger realtime sync saat Firebase siap
     if (window.startOnlineSync) {
       window.startOnlineSync();
     }
@@ -296,7 +295,6 @@
     </div>
   </div>
 
-  <!-- MAIN APP CONTAINER -->
   <div id="main-app" class="hidden h-screen flex overflow-hidden">
 
     <!-- SIDEBAR NAVIGATION -->
@@ -453,7 +451,6 @@
         </div>
       </header>
 
-      <!-- MAIN SCROLLABLE VIEW PANEL CONTAINER -->
       <main class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6">
 
         <!-- 1. DASHBOARD VIEW -->
@@ -867,7 +864,7 @@
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-mono font-bold mb-2">
               🎬 FINAL SUBMISSION & PUBLISH
             </div>
-            <h1 class="text-xl md:text-2xl font-bold text-white">Pengumpulkan Karya Final Video</h1>
+            <h1 class="text-xl md:text-2xl font-bold text-white">Pengumpulan Karya Final Video</h1>
             <p class="text-xs text-slate-400">Unggah file video dari galeri perangkat dan poster/thumbnail karya akhir untuk dinilai.</p>
           </div>
 
@@ -958,10 +955,10 @@
             <div class="flex flex-wrap items-center gap-3">
               <div class="relative min-w-[220px]">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
-                <input type="text" id="galeri-search-input" onkeyup="filterGalleryProjects()" placeholder="Cari karya / kelompok..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan font-mono">
+                <input type="text" id="galeri-search-input" onkeyup="renderGalleryCards()" placeholder="Cari karya / kelompok..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-9 pr-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan font-mono">
               </div>
 
-              <select id="galeri-filter-genre" onchange="filterGalleryProjects()" class="bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-xs text-slate-300 font-mono focus:outline-none focus:border-neon-cyan">
+              <select id="galeri-filter-genre" onchange="renderGalleryCards()" class="bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-xs text-slate-300 font-mono focus:outline-none focus:border-neon-cyan">
                 <option value="ALL">Semua Genre</option>
                 <option value="Iklan Komersial / Promosi">Iklan Komersial</option>
                 <option value="Film Pendek Drama">Film Pendek</option>
@@ -1243,7 +1240,7 @@
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
               <div class="flex items-center justify-between border-b border-white/10 pb-3">
                 <h3 class="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-film text-neon-violet"></i> Pengumpulkan Video Final & Poster Karya
+                  <i class="fa-solid fa-film text-neon-violet"></i> Pengumpulan Video Final & Poster Karya
                 </h3>
                 <span id="guru-video-status-badge" class="px-3 py-1 bg-slate-800 text-slate-400 border border-white/10 rounded-full text-xs font-mono font-bold">BELUM DIUNGGAH</span>
               </div>
@@ -1269,8 +1266,8 @@
                   </div>
 
                   <div>
-                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Poster / Thumbnail Cover:</span>
-                    <div id="guru-sub-poster-container" class="mt-2 h-36 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center text-slate-600">
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold mb-1.5">Poster / Thumbnail Cover:</span>
+                    <div id="guru-sub-poster-container" class="h-36 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center text-slate-600 bg-slate-900">
                       Belum ada poster
                     </div>
                   </div>
@@ -1306,7 +1303,6 @@
     </div>
   </div>
 
-  <!-- MODAL PEMUTAR VIDEO CINEMA GALERI -->
   <div id="galeri-video-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 hidden">
     <div class="max-w-4xl w-full glass-card rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col max-h-[90vh]">
       <div class="p-4 bg-slate-950 border-b border-white/10 flex items-center justify-between">
@@ -1343,7 +1339,6 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
     const AppState = {
       currentUser: {
@@ -1354,7 +1349,7 @@
       },
       currentView: 'dashboard',
       allGroups: [],
-      onlineDataMap: {}, // Map menyimpan data tugas seluruh kelompok dari Firebase
+      onlineDataMap: {},
       selectedGroupId: '',
       project: {
         title: '',
@@ -1365,14 +1360,8 @@
         highConcept: '',
         synopsis: '',
         naskah: '',
-        
-        // Completely Clean Shot List
         shotList: [],
-
-        // Completely Clean Storyboard Data
         storyboard: [],
-
-        // Shooting Checklist (Clean State - Unchecked)
         shootingPreprod: [
           { id: 'prep-1', label: 'Kamera Baterai Terisi 100% & Memory Card Kosong', checked: false },
           { id: 'prep-2', label: 'Storyboard & Shot List Tercetak / Siap di Tablet', checked: false },
@@ -1387,8 +1376,6 @@
           { id: 'prod-4', label: 'Audio Level Bersih Tanpa Clipping (-12dB)', checked: false },
           { id: 'prod-5', label: 'Minimal 2 Take Alternatif Tiap Shot', checked: false }
         ],
-
-        // Clean Submission Data
         submission: {
           submitted: false,
           videoTitle: '',
@@ -1397,8 +1384,6 @@
           posterUrl: '',
           description: ''
         },
-
-        // Rubric Ratings
         evaluation: {
           aspects: [
             { name: 'Kesesuaian Storyboard', score: 0, desc: 'Tampilan visual shot presisi mengikuti perancangan awal.' },
@@ -1497,7 +1482,6 @@
             
             AppState.onlineDataMap[gId] = data;
 
-            // Hitung persen progres kelompok
             let progressVal = '0%';
             if (data.project) {
               let points = 0;
@@ -1523,7 +1507,6 @@
               status: data.project && data.project.submission && data.project.submission.submitted ? 'Karya Terkumpul' : 'Proses Produksi'
             });
 
-            // Sinkronkan balik nilai/catatan guru ke kelompok siswa yang sedang aktif
             if (AppState.currentUser.role === 'siswa' && AppState.currentUser.name === gName) {
               if (data.project && data.project.evaluation) {
                 AppState.project.evaluation = data.project.evaluation;
@@ -1540,7 +1523,6 @@
           }
         }
 
-        // Segarkan tampilan jika sedang aktif
         if (AppState.currentView === 'guru_portal') {
           renderGuruFullReview();
         } else if (AppState.currentView === 'galeri') {
@@ -1562,72 +1544,29 @@
         localStorage.setItem('s2v_project', JSON.stringify(AppState.project));
         localStorage.setItem('s2v_groups', JSON.stringify(AppState.allGroups));
 
-        // Kirim data kelompok ke Cloud Firestore secara online
         if (window.db && window.firebaseFirestore && AppState.currentUser && AppState.currentUser.role === 'siswa' && AppState.currentUser.name) {
           const sanitizedDocId = AppState.currentUser.name.replace(/[\/\#\?\:\s]/g, '_').toLowerCase();
           const docRef = window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", sanitizedDocId);
           
+          // Guard project clone so video Data URL doesn't exceed 1MB Firestore doc limits
+          const projectClone = JSON.parse(JSON.stringify(AppState.project));
+          if (projectClone.submission && projectClone.submission.localVideoUrl && projectClone.submission.localVideoUrl.length > 700000) {
+            projectClone.submission.localVideoUrl = "LOCAL_STORED_VIDEO"; // Metadata synced online
+          }
+
           const payload = {
             currentUser: AppState.currentUser,
-            project: AppState.project,
+            project: projectClone,
             updatedAt: new Date().toISOString()
           };
 
           await window.firebaseFirestore.setDoc(docRef, payload, { merge: true });
-          console.log("Data kelompok berhasil disinkronkan ke server Firebase online!");
         }
       } catch(e) {
-        console.warn("Storage/Firebase quota or connection handling:", e);
+        console.warn("Storage/Firebase quota handling:", e);
       }
     }
-// Sinkronisasi Real-Time Firestore untuk Portal Guru & Siswa
-    function initRealtimeSync() {
-      if (window.db && window.firebaseFirestore) {
-        try {
-          const { collection, onSnapshot } = window.firebaseFirestore;
-          
-          onSnapshot(collection(window.db, "pengiriman_tugas_siswa"), (snapshot) => {
-            let newGroupsList = [];
-            
-            snapshot.forEach((docSnap) => {
-              const data = docSnap.data();
-              const docId = docSnap.id;
-              
-              if (data && data.currentUser) {
-                newGroupsList.push({
-                  id: docId,
-                  name: data.currentUser.name || docId,
-                  class: data.currentUser.class || 'Kelas',
-                  members: data.currentUser.members || '-',
-                  progress: '100%',
-                  status: 'Terkumpul Online'
-                });
-              }
-            });
 
-            if (newGroupsList.length > 0) {
-              AppState.allGroups = newGroupsList;
-              if (!AppState.selectedGroupId) {
-                AppState.selectedGroupId = newGroupsList[0].id;
-              }
-            }
-
-            if (AppState.currentView === 'guru_portal') {
-              renderGuruFullReview();
-            } else if (AppState.currentView === 'galeri') {
-              renderGalleryCards();
-            }
-
-            const statusBadge = document.getElementById('autosave-status');
-            if (statusBadge) {
-              statusBadge.innerHTML = `<span class="tally-green"></span><span class="hidden sm:inline">ONLINE SYNC</span>`;
-            }
-          });
-        } catch (e) {
-          console.warn("Realtime sync error:", e);
-        }
-      }
-    }
     function restoreUserUI(user) {
       document.getElementById('user-display-name').textContent = user.name || 'Belum Login';
       document.getElementById('user-display-role').textContent = `${user.role === 'guru' ? 'Guru Pembimbing' : (user.class || '-')}`;
@@ -1665,6 +1604,21 @@
         navigateTo('guru_portal');
       } else {
         navigateTo('dashboard');
+      }
+
+      // Restore submitted video preview if already uploaded
+      if (AppState.project.submission && AppState.project.submission.localVideoUrl) {
+        const videoPlayer = document.getElementById('final-local-video');
+        const placeholder = document.getElementById('video-preview-placeholder');
+        if (videoPlayer && AppState.project.submission.localVideoUrl !== "LOCAL_STORED_VIDEO") {
+          videoPlayer.src = AppState.project.submission.localVideoUrl;
+          videoPlayer.classList.remove('hidden');
+          if (placeholder) placeholder.classList.add('hidden');
+        }
+      }
+      if (AppState.project.submission && AppState.project.submission.posterUrl) {
+        const box = document.getElementById('poster-preview-box');
+        if (box) box.innerHTML = `<img src="${AppState.project.submission.posterUrl}" class="w-full h-full object-cover">`;
       }
     }
 
@@ -1997,13 +1951,16 @@
         });
       }
 
+      // Fix Video & Poster rendering in Guru Monitor
       const guruVideo = document.getElementById('guru-local-video');
       const guruPlaceholder = document.getElementById('guru-video-placeholder');
       const guruVideoBadge = document.getElementById('guru-video-status-badge');
+      const guruPosterContainer = document.getElementById('guru-sub-poster-container');
 
       if (guruVideo) {
-        if (AppState.project.submission.localVideoUrl) {
+        if (AppState.project.submission && AppState.project.submission.localVideoUrl && AppState.project.submission.localVideoUrl !== "LOCAL_STORED_VIDEO") {
           guruVideo.src = AppState.project.submission.localVideoUrl;
+          guruVideo.load();
           guruVideo.classList.remove('hidden');
           if (guruPlaceholder) guruPlaceholder.classList.add('hidden');
           if (guruVideoBadge) {
@@ -2018,6 +1975,14 @@
             guruVideoBadge.textContent = "BELUM DIUNGGAH";
             guruVideoBadge.className = "px-3 py-1 bg-slate-800 text-slate-400 border border-white/10 rounded-full text-xs font-mono font-bold";
           }
+        }
+      }
+
+      if (guruPosterContainer) {
+        if (AppState.project.submission && AppState.project.submission.posterUrl) {
+          guruPosterContainer.innerHTML = `<img src="${AppState.project.submission.posterUrl}" class="w-full h-full object-cover">`;
+        } else {
+          guruPosterContainer.innerHTML = `Belum ada poster`;
         }
       }
 
@@ -2644,36 +2609,41 @@
       navigateTo('finalvideo');
     }
 
+    // Fix Video Upload handling using FileReader DataURL so it persists and plays across sessions/devices
     function handleLocalVideoUpload(event) {
       const file = event.target.files[0];
       if (file) {
-        const videoUrl = URL.createObjectURL(file);
-        const videoPlayer = document.getElementById('final-local-video');
-        const placeholder = document.getElementById('video-preview-placeholder');
-        const filenameBox = document.getElementById('video-filename');
-        const filenameText = document.getElementById('video-filename-text');
+        showToast(`Memuat video "${file.name}" ke player...`, 'info');
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const dataUrl = e.target.result;
+          const videoPlayer = document.getElementById('final-local-video');
+          const placeholder = document.getElementById('video-preview-placeholder');
+          const filenameBox = document.getElementById('video-filename');
+          const filenameText = document.getElementById('video-filename-text');
 
-        if (videoPlayer) {
-          videoPlayer.src = videoUrl;
-          videoPlayer.classList.remove('hidden');
-        }
-        if (placeholder) placeholder.classList.add('hidden');
+          if (videoPlayer) {
+            videoPlayer.src = dataUrl;
+            videoPlayer.load();
+            videoPlayer.classList.remove('hidden');
+            videoPlayer.play().catch(() => {});
+          }
+          if (placeholder) placeholder.classList.add('hidden');
 
-        if (filenameBox && filenameText) {
-          filenameText.textContent = `${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)`;
-          filenameBox.classList.remove('hidden');
-        }
+          if (filenameBox && filenameText) {
+            filenameText.textContent = `${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)`;
+            filenameBox.classList.remove('hidden');
+          }
 
-        AppState.project.submission.localVideoUrl = videoUrl;
-
-        if (videoPlayer) {
-          videoPlayer.play().catch(() => {});
-        }
-        saveSessionToStorage();
-        showToast(`Video "${file.name}" berhasil dimuat ke monitor!`, 'success');
+          AppState.project.submission.localVideoUrl = dataUrl;
+          saveSessionToStorage();
+          showToast(`Video "${file.name}" siap diputar di monitor & galeri!`, 'success');
+        };
+        reader.readAsDataURL(file);
       }
     }
 
+    // Fix Poster Upload handling
     function previewPosterImage(event) {
       const file = event.target.files[0];
       if (file) {
@@ -2684,6 +2654,7 @@
           if (posterName) posterName.textContent = file.name;
           AppState.project.submission.posterUrl = compressedDataUrl;
           saveSessionToStorage();
+          showToast('Poster thumbnail berhasil dimuat!', 'success');
         });
       }
     }
@@ -2742,7 +2713,7 @@
 
       let galleryList = [];
 
-      // Ambil seluruh data proyek kelompok dari Firebase online
+      // Fetch online project submissions from Firebase
       if (AppState.onlineDataMap && Object.keys(AppState.onlineDataMap).length > 0) {
         Object.keys(AppState.onlineDataMap).forEach((key) => {
           const itemData = AppState.onlineDataMap[key];
@@ -2763,7 +2734,7 @@
         });
       }
 
-      // Cadangan lokal jika proyek sendiri sudah terkumpul
+      // Local submitted project fallback
       if (galleryList.length === 0 && AppState.project.submission && AppState.project.submission.submitted && AppState.project.submission.localVideoUrl) {
         galleryList.push({
           id: 'submitted-current',
@@ -2882,6 +2853,7 @@
       const player = document.getElementById('modal-video-player');
       if (player) {
         player.src = item.videoUrl;
+        player.load();
         player.play().catch(() => {});
       }
 
