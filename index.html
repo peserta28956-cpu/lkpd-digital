@@ -5,34 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Storyboard to Video - Studio Control Room</title>
 
-  <!-- Firebase SDK & Database Firestore -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCothCII7K3jEIzdGSgm_GqWwPCPujAUkw",
-      authDomain: "lkpd-vidiografi.firebaseapp.com",
-      projectId: "lkpd-vidiografi",
-      storageBucket: "lkpd-vidiografi.firebasestorage.app",
-      messagingSenderId: "647636989626",
-      appId: "1:647636989626:web:acc811e7a064cfdcd87483"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Register Firestore globals
-    window.db = db;
-    window.firebaseFirestore = { doc, setDoc, getDoc, onSnapshot, collection, getDocs };
-    console.log("Firebase & Firestore Online Engine Ready!");
-
-    if (window.startOnlineSync) {
-      window.startOnlineSync();
-    }
-  </script>
-
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -64,6 +37,33 @@
         }
       }
     };
+  </script>
+
+  <!-- Firebase SDK & Firestore Module -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCothCII7K3jEIzdGSgm_GqWwPCPujAUkw",
+      authDomain: "lkpd-vidiografi.firebaseapp.com",
+      projectId: "lkpd-vidiografi",
+      storageBucket: "lkpd-vidiografi.firebasestorage.app",
+      messagingSenderId: "647636989626",
+      appId: "1:647636989626:web:acc811e7a064cfdcd87483"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Register Firestore globals
+    window.db = db;
+    window.firebaseFirestore = { doc, setDoc, getDoc, onSnapshot, collection, getDocs, deleteDoc };
+    console.log("Firebase & Firestore Online Engine Ready!");
+
+    if (window.startOnlineSync) {
+      window.startOnlineSync();
+    }
   </script>
 
   <!-- Google Fonts & FontAwesome Icons -->
@@ -130,7 +130,7 @@
       background-clip: text;
     }
 
-    /* Form input fields */
+    /* Form input fields override */
     input, select, textarea {
       -webkit-text-fill-color: initial !important;
       background-clip: initial !important;
@@ -295,6 +295,7 @@
     </div>
   </div>
 
+  <!-- MAIN APPLICATION LAYOUT -->
   <div id="main-app" class="hidden h-screen flex overflow-hidden">
 
     <!-- SIDEBAR NAVIGATION -->
@@ -484,12 +485,10 @@
             <div onclick="navigateTo('ide')" class="glass-card glass-card-hover p-6 rounded-3xl cursor-pointer relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-neon-amber flex items-center justify-center text-xl font-bold">
-                    🎯
-                  </div>
+                  <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-neon-amber flex items-center justify-center text-xl font-bold">🎯</div>
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">PHASE 1</span>
                 </div>
-                <h3 class="text-lg font-bold text-white group-hover:text-neon-cyan transition-colors">Ide & Sinopsis</h3>
+                <h3 class="text-lg font-bold text-white transition-colors">Ide & Sinopsis</h3>
                 <p class="text-xs text-slate-400 mt-1 line-clamp-2">Pengembangan konsep cerita, genre, target penonton, dan sinopsis awal karya film/iklan.</p>
               </div>
               <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neon-cyan">
@@ -501,9 +500,7 @@
             <div onclick="navigateTo('shotlist')" class="glass-card glass-card-hover p-6 rounded-3xl cursor-pointer relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-neon-cyan flex items-center justify-center text-xl font-bold">
-                    📝
-                  </div>
+                  <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-neon-cyan flex items-center justify-center text-xl font-bold">📝</div>
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">PHASE 1</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Shot List</h3>
@@ -518,9 +515,7 @@
             <div onclick="navigateTo('storyboard')" class="glass-card glass-card-hover p-6 rounded-3xl cursor-pointer relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-neon-violet flex items-center justify-center text-xl font-bold">
-                    🎨
-                  </div>
+                  <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-neon-violet flex items-center justify-center text-xl font-bold">🎨</div>
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">PHASE 1</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Storyboard Board</h3>
@@ -535,9 +530,7 @@
             <div onclick="navigateTo('shooting')" class="glass-card glass-card-hover p-6 rounded-3xl cursor-pointer relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-neon-tally flex items-center justify-center text-xl font-bold">
-                    📹
-                  </div>
+                  <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-neon-tally flex items-center justify-center text-xl font-bold">📹</div>
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-rose-950/60 text-neon-tally border border-rose-800/40">PHASE 2</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Shooting Checklist</h3>
@@ -552,9 +545,7 @@
             <div onclick="navigateTo('finalvideo')" class="glass-card glass-card-hover p-6 rounded-3xl cursor-pointer relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-brand-400 flex items-center justify-center text-xl font-bold">
-                    🎬
-                  </div>
+                  <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-brand-400 flex items-center justify-center text-xl font-bold">🎬</div>
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">FINAL</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Final Video Submission</h3>
@@ -566,13 +557,10 @@
               </div>
             </div>
 
-            <!-- Kartu Modul Galeri Karya Siswa -->
             <div onclick="navigateTo('galeri')" class="glass-card glass-card-hover p-6 rounded-3xl cursor-pointer relative overflow-hidden flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-neon-cyan flex items-center justify-center text-xl font-bold">
-                    🍿
-                  </div>
+                  <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-neon-cyan flex items-center justify-center text-xl font-bold">🍿</div>
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-neon-cyan border border-neon-cyan/30">SHOWCASE</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Galeri Karya Siswa</h3>
@@ -719,40 +707,22 @@
                   <i class="fa-solid fa-sliders"></i>
                 </div>
                 <div>
-                  <h3 class="text-sm font-mono font-bold text-white flex items-center gap-2">
-                    Studio Embedded Shot List Cards
-                  </h3>
+                  <h3 class="text-sm font-mono font-bold text-white flex items-center gap-2">Studio Embedded Shot List Cards</h3>
                   <p class="text-[11px] text-slate-400 font-mono">Daftar shot terpisah satu per satu dengan bidang parameter lengkap</p>
                 </div>
               </div>
 
               <div class="flex flex-wrap items-center gap-2">
-                <span class="text-[10px] font-mono text-slate-500 uppercase font-bold mr-1 hidden sm:inline">Quick Add Shot:</span>
-                <button onclick="addPresetShot('MCU', 'Eye Level', 'Pan')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-neon-cyan border border-neon-cyan/30 rounded-lg text-xs font-mono font-semibold transition-all">
-                  + MCU Pan
-                </button>
-                <button onclick="addPresetShot('CU', 'Low Angle', 'Tracking')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-neon-amber border border-neon-amber/30 rounded-lg text-xs font-mono font-semibold transition-all">
-                  + CU Tracking
-                </button>
+                <button onclick="addPresetShot('MCU', 'Eye Level', 'Pan')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-neon-cyan border border-neon-cyan/30 rounded-lg text-xs font-mono font-semibold transition-all">+ MCU Pan</button>
+                <button onclick="addPresetShot('CU', 'Low Angle', 'Tracking')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-neon-amber border border-neon-amber/30 rounded-lg text-xs font-mono font-semibold transition-all">+ CU Tracking</button>
                 <button onclick="addShotRow()" class="px-4 py-2 bg-gradient-to-r from-neon-cyan to-brand-600 hover:from-neon-cyan hover:to-brand-500 text-slate-950 font-black rounded-xl text-xs glow-cyan transition-all flex items-center gap-2 shadow-lg ml-2">
                   <i class="fa-solid fa-plus text-xs"></i> Tambah Shot Baru
                 </button>
               </div>
             </div>
 
-            <!-- Individual Embedded Shot Cards -->
+            <!-- Individual Embedded Shot Cards Container -->
             <div id="shot-cards-container" class="space-y-4"></div>
-
-            <div class="p-4 bg-slate-950/90 border border-white/10 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-slate-400">
-              <div class="flex items-center gap-3">
-                <span class="text-slate-300 font-semibold"><i class="fa-solid fa-circle-info text-neon-cyan mr-1.5"></i> Info:</span>
-                <span>Setiap shot terorganisir terpisah secara modular untuk kemudahan pengisian data sinematografi.</span>
-              </div>
-              <div class="flex items-center gap-2 text-neon-cyan">
-                <span class="tally-green"></span>
-                <span class="font-bold">AUTO-SAVED CARDS</span>
-              </div>
-            </div>
           </div>
 
           <div class="flex items-center justify-between pt-2">
@@ -865,7 +835,7 @@
               🎬 FINAL SUBMISSION & PUBLISH
             </div>
             <h1 class="text-xl md:text-2xl font-bold text-white">Pengumpulan Karya Final Video</h1>
-            <p class="text-xs text-slate-400">Unggah file video dari galeri perangkat dan poster/thumbnail karya akhir untuk dinilai.</p>
+            <p class="text-xs text-slate-400">Tautkan link Google Drive video karya dan unggah poster/thumbnail karya akhir untuk dinilai.</p>
           </div>
 
           <form id="form-final-submission" onsubmit="submitFinalVideo(event)" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -883,15 +853,14 @@
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Upload File Video Langsung dari Galeri / Perangkat</label>
-                <label class="flex flex-col items-center justify-center border-2 border-dashed border-neon-violet/40 hover:border-neon-violet bg-slate-950/80 hover:bg-slate-950 p-5 rounded-2xl cursor-pointer transition-all">
-                  <i class="fa-solid fa-cloud-arrow-up text-3xl text-neon-violet mb-2"></i>
-                  <span class="text-xs font-mono font-bold text-white">Klik atau Tarik Video ke Sini</span>
-                  <span class="text-[10px] font-mono text-slate-400 mt-1">Format Video (*.mp4, *.mov, *.webm, *.avi)</span>
-                  <input type="file" id="final-video-file" accept="video/*" class="hidden" onchange="handleLocalVideoUpload(event)">
-                </label>
-                <p id="video-filename" class="text-[11px] font-mono text-neon-cyan mt-2 hidden">
-                  <i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> File Terpilih: <span id="video-filename-text" class="font-bold text-white"></span>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Link Google Drive Video Final</label>
+                <div class="relative">
+                  <i class="fa-brands fa-google-drive absolute left-3.5 top-3.5 text-neon-cyan text-base"></i>
+                  <input type="url" id="final-gdrive-url" required oninput="handleGoogleDriveUrlChange(this.value)" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan font-mono">
+                </div>
+                <p class="text-[11px] font-mono text-slate-400 mt-1.5 flex items-center gap-1">
+                  <i class="fa-solid fa-circle-info text-neon-amber"></i>
+                  <span>Pastikan akses link diatur ke <b class="text-neon-cyan">"Siapa saja yang memiliki link" (Public)</b>.</span>
                 </p>
               </div>
 
@@ -918,16 +887,16 @@
                 <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
                   <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">Monitor Ruang Kontrol Siaran</h3>
                   <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-neon-tally/20 text-neon-tally border border-neon-tally/30 flex items-center gap-1">
-                    <span class="tally-dot"></span> STUDIO MONITOR
+                    <span class="tally-dot"></span> EMBED PREVIEW MONITOR
                   </span>
                 </div>
 
                 <div class="aspect-video bg-slate-950 rounded-2xl overflow-hidden border-2 border-neon-violet/50 relative flex items-center justify-center shadow-2xl">
                   <div id="video-preview-placeholder" class="text-center p-6 text-slate-500 font-mono text-xs">
-                    <i class="fa-solid fa-film text-4xl mb-3 text-slate-700 block"></i>
-                    <span class="text-slate-400">Belum ada video diunggah. Silakan pilih file video dari galeri perangkat.</span>
+                    <i class="fa-brands fa-google-drive text-4xl mb-3 text-neon-cyan block"></i>
+                    <span class="text-slate-400">Tempelkan link Google Drive video di samping untuk menampilkan pemutar embed instan.</span>
                   </div>
-                  <video id="final-local-video" controls class="w-full h-full object-contain hidden bg-black"></video>
+                  <iframe id="final-gdrive-embed" class="w-full h-full border-0 hidden" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
               </div>
 
@@ -941,7 +910,7 @@
           </form>
         </section>
 
-        <!-- 6.5. GALERI KARYA SISWA VIEW -->
+        <!-- 7. GALERI KARYA SISWA VIEW -->
         <section id="view-galeri" class="view-panel hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -968,13 +937,10 @@
             </div>
           </div>
 
-          <!-- Gallery Video Cards Grid -->
-          <div id="galeri-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Dynamically populated via JavaScript -->
-          </div>
+          <div id="galeri-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
-        <!-- 7. EVALUASI KARYA VIEW -->
+        <!-- 8. EVALUASI KARYA VIEW -->
         <section id="view-evaluasi" class="view-panel hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -1004,7 +970,7 @@
           </div>
         </section>
 
-        <!-- 8. PROFIL SISWA VIEW -->
+        <!-- 9. PROFIL SISWA VIEW -->
         <section id="view-profil" class="view-panel hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div class="flex items-center gap-6">
@@ -1020,7 +986,6 @@
               </div>
             </div>
 
-            <!-- Tombol Reset Sesi Kelompok di Profil -->
             <button onclick="resetGroupSession()" class="px-4 py-2.5 bg-slate-950 hover:bg-rose-950/60 border border-rose-800/60 text-neon-tally rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 shadow">
               <i class="fa-solid fa-rotate-left"></i>
               <span>Reset Sesi & Ganti Kelompok Baru</span>
@@ -1068,7 +1033,7 @@
           </div>
         </section>
 
-        <!-- 9. PORTAL GURU VIEW -->
+        <!-- 10. PORTAL GURU VIEW -->
         <section id="view-guru_portal" class="view-panel hidden space-y-6">
           <div class="glass-card p-6 rounded-3xl border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -1084,13 +1049,13 @@
               <div>
                 <label class="block text-[10px] font-mono uppercase text-slate-500 font-bold">Pilih Kelompok & Anggota Siswa:</label>
                 <select id="guru-student-selector" onchange="switchStudentReview(this.value)" class="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer max-w-xs truncate">
-                  <!-- Dynamically populated in JavaScript -->
+                  <!-- Dynamically populated in JS -->
                 </select>
               </div>
             </div>
           </div>
 
-          <!-- KARTU IDENTITAS KELOMPOK & ANGGOTA SISWA -->
+          <!-- KARTU IDENTITAS KELOMPOK -->
           <div class="glass-card p-5 rounded-3xl border border-white/10 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div class="flex items-start gap-4">
@@ -1121,153 +1086,133 @@
                   <span class="text-[10px] text-slate-500 block uppercase">Status Video</span>
                   <span id="guru-card-group-status" class="font-bold text-slate-400">Belum Dimulai</span>
                 </div>
+                <button id="btn-guru-delete-group" onclick="promptDeleteGroup()" class="px-3.5 py-2 bg-rose-950/60 hover:bg-rose-900 border border-rose-800/60 text-neon-tally rounded-xl font-bold flex items-center gap-1.5 transition-all text-xs" title="Hapus Tugas Kelompok Ini">
+                  <i class="fa-solid fa-trash-can"></i>
+                  <span class="hidden sm:inline">Hapus Tugas</span>
+                </button>
               </div>
             </div>
           </div>
 
-          <div class="flex flex-wrap bg-slate-950 p-1.5 rounded-2xl border border-white/10 gap-2 font-mono text-xs">
-            <button onclick="switchGuruPhaseTab('praprod')" id="guru-tab-praprod" class="flex-1 py-2 px-3 rounded-xl font-bold bg-brand-600 text-white shadow flex items-center justify-center gap-2 transition-all">
-              <i class="fa-solid fa-lightbulb text-neon-amber"></i> 1. Pra-Produksi
+          <!-- GURU INSPECTION PHASE TABS -->
+          <div class="flex bg-slate-950 p-1.5 rounded-2xl border border-white/10 font-mono text-xs flex-wrap gap-1">
+            <button id="guru-tab-praprod" onclick="switchGuruPhaseTab('praprod')" class="flex-1 py-2 px-3 rounded-xl font-bold bg-brand-600 text-white shadow flex items-center justify-center gap-2 transition-all glow-violet">
+              <span>1. Pra-Produksi</span>
             </button>
-            <button onclick="switchGuruPhaseTab('prod')" id="guru-tab-prod" class="flex-1 py-2 px-3 rounded-xl font-bold text-slate-400 hover:text-white flex items-center justify-center gap-2 transition-all">
-              <i class="fa-solid fa-video text-neon-tally"></i> 2. Produksi
+            <button id="guru-tab-prod" onclick="switchGuruPhaseTab('prod')" class="flex-1 py-2 px-3 rounded-xl font-bold text-slate-400 hover:text-white flex items-center justify-center gap-2 transition-all">
+              <span>2. Produksi</span>
             </button>
-            <button onclick="switchGuruPhaseTab('pascaprod')" id="guru-tab-pascaprod" class="flex-1 py-2 px-3 rounded-xl font-bold text-slate-400 hover:text-white flex items-center justify-center gap-2 transition-all">
-              <i class="fa-solid fa-film text-emerald-400"></i> 3. Pasca-Produksi & Video
+            <button id="guru-tab-pascaprod" onclick="switchGuruPhaseTab('pascaprod')" class="flex-1 py-2 px-3 rounded-xl font-bold text-slate-400 hover:text-white flex items-center justify-center gap-2 transition-all">
+              <span>3. Pasca-Produksi</span>
             </button>
-            <button onclick="switchGuruPhaseTab('penilaian')" id="guru-tab-penilaian" class="flex-1 py-2 px-3 rounded-xl font-bold text-slate-400 hover:text-white flex items-center justify-center gap-2 transition-all">
-              <i class="fa-solid fa-star-half-stroke text-neon-cyan"></i> 4. Rubrik Penilaian
+            <button id="guru-tab-penilaian" onclick="switchGuruPhaseTab('penilaian')" class="flex-1 py-2 px-3 rounded-xl font-bold text-slate-400 hover:text-white flex items-center justify-center gap-2 transition-all">
+              <span>4. Penilaian & Feedback</span>
             </button>
           </div>
 
-          <!-- PANEL PHASE 1: PRA-PRODUKSI REKAP -->
+          <!-- PHASE 1: PRA-PRODUKSI REVIEW PANEL -->
           <div id="guru-phase-praprod" class="guru-phase-panel space-y-6">
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
-              <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 class="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-file-lines text-neon-amber"></i> Ide & Sinopsis Cerita Siswa
-                </h3>
-                <span id="guru-praprod-badge" class="px-2.5 py-1 bg-slate-800 text-slate-400 border border-white/10 rounded-full text-[10px] font-mono font-bold">BELUM DIISI</span>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-950 p-4 rounded-2xl border border-white/5 font-mono text-xs">
-                <div>
-                  <span class="text-slate-500 block">Judul Proyek:</span>
-                  <span id="guru-review-title" class="font-bold text-slate-300 text-sm">Belum Ada Judul</span>
+              <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-amber border-b border-white/10 pb-2">Ide, Sinopsis & Skenario Naskah</h3>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+                <div class="bg-slate-950 p-3 rounded-xl border border-white/5">
+                  <span class="text-slate-500 block uppercase">Judul Proyek</span>
+                  <span id="guru-review-title" class="font-bold text-white text-sm">Belum Ada Judul</span>
                 </div>
-                <div>
-                  <span class="text-slate-500 block">Genre & Tema:</span>
-                  <span id="guru-review-genre" class="font-semibold text-slate-400">- • -</span>
+                <div class="bg-slate-950 p-3 rounded-xl border border-white/5">
+                  <span class="text-slate-500 block uppercase">Genre & Tema</span>
+                  <span id="guru-review-genre" class="font-bold text-neon-cyan">- • -</span>
                 </div>
-                <div>
-                  <span class="text-slate-500 block">Target Durasi & Penonton:</span>
-                  <span id="guru-review-duration" class="font-semibold text-slate-400">- • -</span>
+                <div class="bg-slate-950 p-3 rounded-xl border border-white/5">
+                  <span class="text-slate-500 block uppercase">Durasi & Target</span>
+                  <span id="guru-review-duration" class="font-bold text-neon-amber">- • -</span>
                 </div>
               </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-slate-950 p-4 rounded-2xl border border-white/5">
-                  <span class="text-[10px] font-mono font-bold uppercase text-slate-400 block mb-1">Ide Utama / High Concept:</span>
-                  <p id="guru-review-concept" class="text-xs text-slate-500 leading-relaxed italic">Belum diisi oleh siswa.</p>
+              <div class="space-y-3 pt-2">
+                <div>
+                  <span class="text-[11px] font-mono font-bold uppercase text-slate-400">Ide Utama / High Concept:</span>
+                  <p id="guru-review-concept" class="text-xs text-slate-200 mt-1 italic bg-slate-950 p-3 rounded-xl border border-white/5 leading-relaxed">Belum diisi oleh siswa.</p>
                 </div>
-                <div class="bg-slate-950 p-4 rounded-2xl border border-white/5">
-                  <span class="text-[10px] font-mono font-bold uppercase text-slate-400 block mb-1">Sinopsis Alur Cerita:</span>
-                  <p id="guru-review-synopsis" class="text-xs text-slate-500 leading-relaxed italic">Belum diisi oleh siswa.</p>
+                <div>
+                  <span class="text-[11px] font-mono font-bold uppercase text-slate-400">Sinopsis Lengkap:</span>
+                  <p id="guru-review-synopsis" class="text-xs text-slate-200 mt-1 bg-slate-950 p-3 rounded-xl border border-white/5 leading-relaxed">Belum diisi oleh siswa.</p>
                 </div>
-              </div>
-
-              <div class="bg-slate-950 p-4 rounded-2xl border border-white/5">
-                <span class="text-[10px] font-mono font-bold uppercase text-neon-cyan block mb-1">
-                  <i class="fa-solid fa-scroll text-neon-cyan mr-1"></i> Naskah / Skenario Video Siswa:
-                </span>
-                <pre id="guru-review-naskah" class="text-xs text-slate-400 leading-relaxed font-mono whitespace-pre-wrap bg-slate-900/80 p-3 rounded-xl border border-white/5 max-h-48 overflow-y-auto">Belum ada naskah ditulis oleh siswa.</pre>
+                <div>
+                  <span class="text-[11px] font-mono font-bold uppercase text-neon-cyan">Skenario Naskah Video (Screenplay):</span>
+                  <pre id="guru-review-naskah" class="text-xs font-mono text-slate-200 mt-1 bg-slate-950 p-4 rounded-xl border border-white/5 whitespace-pre-wrap leading-relaxed max-h-60 overflow-y-auto">Belum ada naskah ditulis oleh siswa.</pre>
+                </div>
               </div>
             </div>
 
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
-              <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 class="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-list-check text-neon-cyan"></i> Shot List Sinematografi (Total: <span id="guru-shot-count">0</span> Shot)
-                </h3>
-                <span id="guru-total-timecode" class="text-xs font-mono font-bold text-neon-violet bg-slate-950 px-3 py-1 rounded-full border border-white/10">00:00 TIMECODE</span>
+              <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-cyan">Perancangan Shot List Matrix</h3>
+                <div class="flex items-center gap-3 font-mono text-xs">
+                  <span class="text-slate-400">Shot: <b id="guru-shot-count" class="text-neon-cyan">0</b></span>
+                  <span id="guru-total-timecode" class="text-neon-amber font-bold">00:00 TIMECODE</span>
+                </div>
               </div>
-              <div id="guru-shotlist-preview-container" class="space-y-3"></div>
+              <div id="guru-shotlist-preview-container" class="space-y-2"></div>
             </div>
 
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
-              <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 class="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-border-all text-neon-violet"></i> Galeri Storyboard Karya Siswa
-                </h3>
-                <span id="guru-storyboard-count" class="text-xs font-mono font-semibold text-slate-400">0 Frame Visual</span>
+              <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-violet">Visualisasi Storyboard Frame</h3>
+                <span id="guru-storyboard-count" class="text-xs font-mono font-bold text-neon-violet">0 Frame Visual</span>
               </div>
-              <div id="guru-storyboard-preview-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+              <div id="guru-storyboard-preview-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
             </div>
           </div>
 
-          <!-- PANEL PHASE 2: PRODUKSI REKAP -->
-          <div id="guru-phase-prod" class="guru-phase-panel hidden space-y-6">
-            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-6">
-              <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 class="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-clipboard-check text-neon-tally"></i> Status Checklist Lapangan & Eksekusi Shooting
-                </h3>
-                <span id="guru-shooting-pct" class="px-3 py-1 bg-slate-800 text-slate-400 border border-white/10 rounded-full text-xs font-mono font-bold">0% Selesai</span>
+          <!-- PHASE 2: PRODUKSI REVIEW PANEL -->
+          <div id="guru-phase-prod" class="guru-phase-panel space-y-6 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-amber border-b border-white/10 pb-2">Pre-Production Equipment Status</h3>
+                <div id="guru-preprod-checklist-view" class="space-y-2 text-xs font-mono"></div>
               </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-slate-950 p-5 rounded-2xl border border-white/5 space-y-3">
-                  <h4 class="text-xs font-mono font-bold text-neon-cyan uppercase flex items-center justify-between">
-                    <span>1. Persiapan Alat Pra-Produksi</span>
-                    <span id="guru-preprod-status-text">0/5 Terverifikasi</span>
-                  </h4>
-                  <div id="guru-preprod-checklist-view" class="space-y-2 text-xs"></div>
-                </div>
-
-                <div class="bg-slate-950 p-5 rounded-2xl border border-white/5 space-y-3">
-                  <h4 class="text-xs font-mono font-bold text-neon-tally uppercase flex items-center justify-between">
-                    <span>2. Standar Kualitas Shooting Lapangan</span>
-                    <span id="guru-prod-status-text">0/5 Terverifikasi</span>
-                  </h4>
-                  <div id="guru-prod-checklist-view" class="space-y-2 text-xs"></div>
-                </div>
+              <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-tally border-b border-white/10 pb-2">Production Quality Standards</h3>
+                <div id="guru-prod-checklist-view" class="space-y-2 text-xs font-mono"></div>
               </div>
             </div>
           </div>
 
-          <!-- PANEL PHASE 3: PASCA-PRODUKSI & VIDEO FINAL REKAP -->
-          <div id="guru-phase-pascaprod" class="guru-phase-panel hidden space-y-6">
+          <!-- PHASE 3: PASCA-PRODUKSI REVIEW PANEL -->
+          <div id="guru-phase-pascaprod" class="guru-phase-panel space-y-6 hidden">
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
               <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 class="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-film text-neon-violet"></i> Pengumpulan Video Final & Poster Karya
-                </h3>
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-white">Inspektur Video Final Siswa</h3>
                 <span id="guru-video-status-badge" class="px-3 py-1 bg-slate-800 text-slate-400 border border-white/10 rounded-full text-xs font-mono font-bold">BELUM DIUNGGAH</span>
               </div>
 
               <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 aspect-video bg-slate-950 rounded-2xl overflow-hidden border-2 border-slate-800 relative flex items-center justify-center">
-                  <div id="guru-video-placeholder" class="text-center p-6 text-slate-500 font-mono text-xs">
-                    <i class="fa-solid fa-video-slash text-3xl mb-2 block"></i>
-                    <span>Belum ada file video diunggah oleh siswa</span>
+                <div class="lg:col-span-2 space-y-3">
+                  <div class="aspect-video bg-slate-950 rounded-2xl overflow-hidden border-2 border-neon-violet/50 relative flex items-center justify-center shadow-2xl">
+                    <div id="guru-video-placeholder" class="text-center p-6 text-slate-500 font-mono text-xs">
+                      <i class="fa-brands fa-google-drive text-4xl mb-3 text-neon-cyan block"></i>
+                      <span class="text-slate-400">Siswa belum memasukkan link Google Drive video final.</span>
+                    </div>
+                    <iframe id="guru-gdrive-embed" class="w-full h-full border-0 hidden" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                   </div>
-                  <video id="guru-local-video" controls class="w-full h-full object-contain bg-black hidden"></video>
                 </div>
 
-                <div class="bg-slate-950 p-5 rounded-2xl border border-white/5 space-y-4 font-mono text-xs">
-                  <div>
-                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Judul Video Final:</span>
-                    <span id="guru-sub-title" class="font-bold text-slate-300 text-sm">Belum Ada Video</span>
+                <div class="space-y-4 font-mono text-xs flex flex-col justify-between">
+                  <div class="space-y-3">
+                    <div>
+                      <span class="text-slate-500 block uppercase">Judul Video:</span>
+                      <span id="guru-sub-title" class="font-bold text-white text-sm">Belum Ada Video</span>
+                    </div>
+                    <div>
+                      <span class="text-slate-500 block uppercase">Anggota Kelompok:</span>
+                      <span id="guru-sub-team" class="text-slate-300">-</span>
+                    </div>
                   </div>
 
                   <div>
-                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Anggota Tim Penyusun:</span>
-                    <span id="guru-sub-team" class="text-slate-400">-</span>
-                  </div>
-
-                  <div>
-                    <span class="text-slate-500 block text-[10px] uppercase font-bold mb-1.5">Poster / Thumbnail Cover:</span>
-                    <div id="guru-sub-poster-container" class="h-36 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center text-slate-600 bg-slate-900">
+                    <span class="text-slate-500 block uppercase mb-2">Poster Thumbnail:</span>
+                    <div id="guru-sub-poster-container" class="h-32 rounded-xl bg-slate-950 border border-white/10 overflow-hidden flex items-center justify-center text-slate-600">
                       Belum ada poster
                     </div>
                   </div>
@@ -1276,25 +1221,22 @@
             </div>
           </div>
 
-          <!-- PANEL PHASE 4: RUBRIK PENILAIAN -->
-          <div id="guru-phase-penilaian" class="guru-phase-panel hidden space-y-6">
+          <!-- PHASE 4: PENILAIAN & FEEDBACK PANEL -->
+          <div id="guru-phase-penilaian" class="guru-phase-panel space-y-6 hidden">
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
-              <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 class="font-mono font-bold text-xs text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-star-half-stroke text-neon-cyan"></i> Evaluasi Rubrik & Skor Akhir Siswa
-                </h3>
-                <span id="guru-rubric-total" class="text-sm font-mono font-extrabold text-neon-amber bg-slate-950 px-3 py-1 rounded-full border border-white/10">0 / 28</span>
+              <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-amber">Rubrik Penilaian Karya Sinematografi</h3>
+                <span id="guru-rubric-total" class="text-sm font-mono font-bold text-neon-amber bg-slate-950 px-3 py-1 rounded-xl border border-white/10">0 / 28</span>
               </div>
-
               <div id="guru-rubric-interactive-list" class="space-y-3"></div>
+            </div>
 
-              <div class="pt-4 border-t border-white/10 space-y-2">
-                <label class="block text-xs font-mono font-bold text-neon-cyan uppercase">Input Feedback & Catatan Evaluasi Guru:</label>
-                <textarea id="guru-feedback-input" rows="3" placeholder="Tuliskan catatan apresiasi atau evaluasi teknis untuk kelompok siswa ini..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-neon-cyan font-mono leading-relaxed"></textarea>
-                <button onclick="saveGuruAssessment()" class="px-5 py-2.5 bg-gradient-to-r from-neon-violet to-brand-600 text-white font-bold rounded-xl text-xs glow-violet transition-all flex items-center gap-2">
-                  <i class="fa-solid fa-floppy-disk"></i> Simpan Penilaian Guru
-                </button>
-              </div>
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-3">
+              <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-cyan border-b border-white/10 pb-2">Berikan Catatan & Evaluasi Pembimbing</h3>
+              <textarea id="guru-feedback-input" rows="3" placeholder="Tuliskan catatan apresiasi, masukan teknik sinematografi, atau evaluasi perbaikan untuk kelompok siswa ini..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-neon-cyan leading-relaxed"></textarea>
+              <button onclick="saveGuruAssessment()" class="px-6 py-3 bg-gradient-to-r from-neon-violet to-brand-600 hover:from-neon-violet hover:to-brand-500 text-white text-xs font-bold rounded-xl glow-violet flex items-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan & Kirim Nilai ke Siswa
+              </button>
             </div>
           </div>
         </section>
@@ -1303,6 +1245,7 @@
     </div>
   </div>
 
+  <!-- MODAL PEMUTAR VIDEO GALERI -->
   <div id="galeri-video-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 hidden">
     <div class="max-w-4xl w-full glass-card rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col max-h-[90vh]">
       <div class="p-4 bg-slate-950 border-b border-white/10 flex items-center justify-between">
@@ -1310,47 +1253,76 @@
           <span class="tally-dot"></span>
           <h3 id="modal-project-title" class="text-sm font-mono font-bold text-white truncate">Judul Video</h3>
         </div>
-        <button onclick="closeGaleriModal()" class="w-8 h-8 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
-          <i class="fa-solid fa-xmark text-sm"></i>
-        </button>
+        <div class="flex items-center gap-2">
+          <button id="modal-guru-delete-btn" onclick="promptDeleteModalItem()" class="px-3 py-1 bg-rose-950 hover:bg-rose-900 border border-rose-800 text-neon-tally rounded-xl text-xs font-mono font-bold hidden flex items-center gap-1.5">
+            <i class="fa-solid fa-trash-can"></i> Hapus Karya
+          </button>
+          <button onclick="closeGaleriModal()" class="w-8 h-8 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="aspect-video bg-black flex items-center justify-center relative overflow-hidden">
-        <video id="modal-video-player" controls class="w-full h-full object-contain"></video>
-      </div>
+      <div class="p-6 overflow-y-auto space-y-4">
+        <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-white/10">
+          <iframe id="modal-gdrive-embed" class="w-full h-full border-0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
 
-      <div class="p-5 overflow-y-auto space-y-3 font-mono text-xs bg-slate-900/60">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
           <div>
-            <span id="modal-group-name" class="font-bold text-neon-cyan text-sm block">Kelompok -</span>
-            <span id="modal-group-members" class="text-slate-400 text-[11px]">Anggota: -</span>
+            <h4 id="modal-group-name" class="text-base font-bold text-white">Nama Kelompok</h4>
+            <p id="modal-group-members" class="text-xs font-mono text-slate-400">Anggota Kelompok</p>
           </div>
-          <button id="modal-like-btn" onclick="toggleGalleryLike()" class="px-3 py-1.5 bg-slate-950 border border-rose-500/30 hover:bg-rose-950/40 text-neon-tally rounded-xl font-bold flex items-center gap-1.5 transition-all">
-            <i class="fa-solid fa-heart"></i>
-            <span id="modal-like-count">0</span> Apresiasi
+
+          <button onclick="toggleGalleryLike()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-white/10 rounded-xl text-xs font-mono font-bold text-rose-400 flex items-center gap-2 self-start sm:self-auto">
+            <i class="fa-solid fa-heart text-rose-500"></i>
+            <span>Apresiasi Karya (<span id="modal-like-count">0</span>)</span>
           </button>
         </div>
 
-        <div>
-          <span class="text-slate-500 block text-[10px] uppercase font-bold">Sinopsis & Deskripsi Karya:</span>
-          <p id="modal-project-desc" class="text-slate-300 leading-relaxed mt-1 italic">Belum ada deskripsi.</p>
+        <div class="bg-slate-950 p-4 rounded-2xl border border-white/5">
+          <span class="text-[10px] font-mono font-bold uppercase text-slate-500 block mb-1">Sinopsis & Deskripsi Karya:</span>
+          <p id="modal-project-desc" class="text-xs text-slate-300 leading-relaxed">Sinopsis video...</p>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- MODAL KONFIRMASI HAPUS (GURU) -->
+  <div id="delete-confirm-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+    <div class="max-w-md w-full glass-card p-6 rounded-3xl border border-rose-500/30 shadow-2xl space-y-4">
+      <div class="flex items-center gap-3 text-neon-tally">
+        <div class="w-10 h-10 rounded-2xl bg-rose-950/80 border border-rose-800 flex items-center justify-center text-lg font-bold">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-mono font-bold text-white">Konfirmasi Hapus Karya</h3>
+          <span class="text-[10px] font-mono text-neon-tally uppercase">Tindakan Khusus Guru</span>
+        </div>
+      </div>
+      <p id="delete-confirm-text" class="text-xs text-slate-300 font-mono leading-relaxed">
+        Apakah Anda yakin ingin menghapus data karya & tugas kelompok ini secara permanen dari server database online?
+      </p>
+      <div class="flex justify-end gap-3 pt-2">
+        <button onclick="closeDeleteModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-mono font-bold border border-white/10">
+          Batal
+        </button>
+        <button onclick="executeDeleteSubmission()" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-mono font-bold shadow-lg shadow-rose-950/50 flex items-center gap-1.5">
+          <i class="fa-solid fa-trash-can"></i> Hapus Permanen
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    const AppState = {
-      currentUser: {
-        role: 'siswa',
-        name: '',
-        class: '',
-        members: ''
-      },
+    // Global Application State Object
+    window.AppState = {
+      currentUser: { role: 'siswa', name: '', class: '', members: '' },
       currentView: 'dashboard',
+      selectedGroupId: '',
       allGroups: [],
       onlineDataMap: {},
-      selectedGroupId: '',
       project: {
         title: '',
         theme: '',
@@ -1363,18 +1335,18 @@
         shotList: [],
         storyboard: [],
         shootingPreprod: [
-          { id: 'prep-1', label: 'Kamera Baterai Terisi 100% & Memory Card Kosong', checked: false },
-          { id: 'prep-2', label: 'Storyboard & Shot List Tercetak / Siap di Tablet', checked: false },
-          { id: 'prep-3', label: 'Tripod & Lighting LED Portable Siap', checked: false },
-          { id: 'prep-4', label: 'Microphone Clip-on Wireless Diuji Sinkron', checked: false },
-          { id: 'prep-5', label: 'Izin Lokasi / Dapur / Studio Sekolah Disetujui', checked: false }
+          { id: 'pre-1', label: 'Kamera & Lensa Siap', checked: false },
+          { id: 'pre-2', label: 'Baterai Kamera Terisi Penuh', checked: false },
+          { id: 'pre-3', label: 'Memory Card Tersedia & Kosong', checked: false },
+          { id: 'pre-4', label: 'Storyboard Selesai & Terkonfirmasi', checked: false },
+          { id: 'pre-5', label: 'Shot List Siap & Dibawa ke Lokasi', checked: false }
         ],
         shootingProd: [
-          { id: 'prod-1', label: 'Komposisi Gambar Sesuai Storyboard (Rule of Thirds)', checked: false },
-          { id: 'prod-2', label: 'Fokus Tajam & Manual Exposure Terkunci', checked: false },
-          { id: 'prod-3', label: 'Lighting Cukup & Tidak Backlight', checked: false },
-          { id: 'prod-4', label: 'Audio Level Bersih Tanpa Clipping (-12dB)', checked: false },
-          { id: 'prod-5', label: 'Minimal 2 Take Alternatif Tiap Shot', checked: false }
+          { id: 'prod-1', label: 'Komposisi Frame Sesuai Plan', checked: false },
+          { id: 'prod-2', label: 'Fokus Gambar Tepat & Tajam', checked: false },
+          { id: 'prod-3', label: 'Exposure (ISO, Aperture) Sesuai', checked: false },
+          { id: 'prod-4', label: 'Pencahayaan / Lighting Cukup', checked: false },
+          { id: 'prod-5', label: 'Audio Terrekam Jelas Tanpa Noise', checked: false }
         ],
         submission: {
           submitted: false,
@@ -1386,39 +1358,48 @@
         },
         evaluation: {
           aspects: [
-            { name: 'Kesesuaian Storyboard', score: 0, desc: 'Tampilan visual shot presisi mengikuti perancangan awal.' },
-            { name: 'Teknik Pengambilan Gambar', score: 0, desc: 'Pergerakan kamera stabil dan pergerakan halus.' },
-            { name: 'Komposisi Visual', score: 0, desc: 'Penerapan rule of thirds dan headroom terpelihara baik.' },
-            { name: 'Kualitas Audio', score: 0, desc: 'Dialog terdengar jelas, musik latar seimbang.' },
-            { name: 'Kerapian Editing', score: 0, desc: 'Pemerataan ritme potongan video berjalan mulus.' },
-            { name: 'Kreativitas & Konsep', score: 0, desc: 'Gaya penyampaian segar dan sangat komunikatif.' },
-            { name: 'Kerapian Hasil Akhir', score: 0, desc: 'Format video jernih 1080p tanpa cacat kompresi.' }
+            { name: 'Kesesuaian Storyboard', desc: 'Visualisasi adegan sesuai rancangan storyboard', score: 0 },
+            { name: 'Teknik Pengambilan Gambar', desc: 'Variasi shot size, camera angle, dan movement', score: 0 },
+            { name: 'Komposisi Visual', desc: 'Rule of thirds, balance, dan kebersihan frame', score: 0 },
+            { name: 'Kualitas Audio', desc: 'Kejelasan dialog, musik, dan keseimbangan suara', score: 0 },
+            { name: 'Teknik Editing', desc: 'Kerapian pemotongan clip, tempo, dan transisi', score: 0 },
+            { name: 'Kreativitas & Estetika', desc: 'Gaya visual, penyampaian cerita, dan daya tarik', score: 0 },
+            { name: 'Kerapian Hasil Akhir', desc: 'Format video, judul, poster, dan kelengkapan', score: 0 }
           ]
         }
       }
     };
 
-    function loadSavedSession() {
-      try {
-        const savedUser = localStorage.getItem('s2v_session');
-        const savedProject = localStorage.getItem('s2v_project');
-        const savedGroups = localStorage.getItem('s2v_groups');
+    function getGoogleDriveEmbedUrl(url) {
+      if (!url) return '';
+      const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return `https://drive.google.com/file/d/${match[1]}/preview`;
+      }
+      if (url.includes('drive.google.com') && url.includes('/preview')) {
+        return url;
+      }
+      return url;
+    }
 
-        if (savedUser) {
-          AppState.currentUser = JSON.parse(savedUser);
-        }
-        if (savedProject) {
-          AppState.project = JSON.parse(savedProject);
-        }
-        if (savedGroups) {
-          AppState.allGroups = JSON.parse(savedGroups);
-        }
+    function handleGoogleDriveUrlChange(url) {
+      const embedUrl = getGoogleDriveEmbedUrl(url);
+      const iframe = document.getElementById('final-gdrive-embed');
+      const placeholder = document.getElementById('video-preview-placeholder');
 
-        if (AppState.currentUser && AppState.currentUser.name) {
-          restoreUserUI(AppState.currentUser);
+      if (embedUrl && embedUrl.includes('drive.google.com')) {
+        if (iframe) {
+          iframe.src = embedUrl;
+          iframe.classList.remove('hidden');
         }
-      } catch (e) {
-        console.warn("Error loading saved session:", e);
+        if (placeholder) placeholder.classList.add('hidden');
+        AppState.project.submission.localVideoUrl = url;
+      } else {
+        if (iframe) {
+          iframe.src = '';
+          iframe.classList.add('hidden');
+        }
+        if (placeholder) placeholder.classList.remove('hidden');
       }
     }
 
@@ -1448,6 +1429,29 @@
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
+    }
+
+    function loadSavedSession() {
+      try {
+        const savedUser = localStorage.getItem('s2v_session');
+        if (savedUser) {
+          AppState.currentUser = JSON.parse(savedUser);
+        }
+        const savedProject = localStorage.getItem('s2v_project');
+        if (savedProject) {
+          AppState.project = JSON.parse(savedProject);
+        }
+        const savedGroups = localStorage.getItem('s2v_groups');
+        if (savedGroups) {
+          AppState.allGroups = JSON.parse(savedGroups);
+        }
+      } catch(e) {
+        console.warn("Load session error:", e);
+      }
+
+      if (AppState.currentUser && AppState.currentUser.name) {
+        restoreUserUI(AppState.currentUser);
+      }
     }
 
     window.onload = function() {
@@ -1548,10 +1552,9 @@
           const sanitizedDocId = AppState.currentUser.name.replace(/[\/\#\?\:\s]/g, '_').toLowerCase();
           const docRef = window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", sanitizedDocId);
           
-          // Guard project clone so video Data URL doesn't exceed 1MB Firestore doc limits
           const projectClone = JSON.parse(JSON.stringify(AppState.project));
           if (projectClone.submission && projectClone.submission.localVideoUrl && projectClone.submission.localVideoUrl.length > 700000) {
-            projectClone.submission.localVideoUrl = "LOCAL_STORED_VIDEO"; // Metadata synced online
+            projectClone.submission.localVideoUrl = "LOCAL_STORED_VIDEO";
           }
 
           const payload = {
@@ -1563,42 +1566,66 @@
           await window.firebaseFirestore.setDoc(docRef, payload, { merge: true });
         }
       } catch(e) {
-        console.warn("Storage/Firebase quota handling:", e);
+        console.warn("Storage error handling:", e);
       }
     }
 
     function restoreUserUI(user) {
-      document.getElementById('user-display-name').textContent = user.name || 'Belum Login';
-      document.getElementById('user-display-role').textContent = `${user.role === 'guru' ? 'Guru Pembimbing' : (user.class || '-')}`;
+      const nameElem = document.getElementById('user-display-name');
+      if (nameElem) nameElem.textContent = user.name || 'Belum Login';
+      
+      const roleElem = document.getElementById('user-display-role');
+      if (roleElem) roleElem.textContent = `${user.role === 'guru' ? 'Guru Pembimbing' : (user.class || '-')}`;
       
       const initials = (user.name || '--').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-      document.getElementById('user-avatar-initials').textContent = initials;
-      document.getElementById('profile-avatar-large').textContent = initials;
-      document.getElementById('profile-name').textContent = user.name || 'Belum Ada Kelompok Login';
-      document.getElementById('profile-class').textContent = user.role === 'guru' ? 'Guru Pembimbing Film' : (user.class ? `${user.class} • Anggota: ${user.members}` : 'Silakan login sebagai kelompok siswa');
       
-      if (user.role === 'guru') {
-        document.getElementById('dash-greeting').textContent = `Selamat datang, ${user.name}! Siap membimbing & mengevaluasi karya siswa hari ini?`;
-        const guruTitle = document.getElementById('guru-greeting-title');
-        if (guruTitle) guruTitle.textContent = `Selamat Bertugas, ${user.name}!`;
-      } else {
-        document.getElementById('dash-greeting').textContent = user.name ? `Halo, ${user.name}! Siap membuat karya hari ini?` : 'Halo! Siap membuat karya hari ini?';
+      const initialsElem = document.getElementById('user-avatar-initials');
+      if (initialsElem) initialsElem.textContent = initials;
+      
+      const profAvatar = document.getElementById('profile-avatar-large');
+      if (profAvatar) profAvatar.textContent = initials;
+
+      const profName = document.getElementById('profile-name');
+      if (profName) profName.textContent = user.name || 'Belum Ada Kelompok Login';
+
+      const profClass = document.getElementById('profile-class');
+      if (profClass) profClass.textContent = user.role === 'guru' ? 'Guru Pembimbing Film' : (user.class ? `${user.class} • Anggota: ${user.members}` : 'Silakan login sebagai kelompok siswa');
+      
+      const dashGreeting = document.getElementById('dash-greeting');
+      if (dashGreeting) {
+        if (user.role === 'guru') {
+          dashGreeting.textContent = `Selamat datang, ${user.name}! Siap membimbing & mengevaluasi karya siswa hari ini?`;
+        } else {
+          dashGreeting.textContent = user.name ? `Halo, ${user.name}! Siap membuat karya hari ini?` : 'Halo! Siap membuat karya hari ini?';
+        }
       }
 
-      if (user.role === 'guru') {
-        document.getElementById('nav-guru-portal').classList.remove('hidden');
-        document.getElementById('nav-group-praprod').classList.add('hidden');
-        document.getElementById('nav-group-prod').classList.add('hidden');
-        document.getElementById('nav-group-pascaprod').classList.add('hidden');
-      } else {
-        document.getElementById('nav-guru-portal').classList.add('hidden');
-        document.getElementById('nav-group-praprod').classList.remove('hidden');
-        document.getElementById('nav-group-prod').classList.remove('hidden');
-        document.getElementById('nav-group-pascaprod').classList.remove('hidden');
+      const guruTitle = document.getElementById('guru-greeting-title');
+      if (guruTitle && user.role === 'guru') {
+        guruTitle.textContent = `Selamat Bertugas, ${user.name}!`;
       }
 
-      document.getElementById('login-screen').classList.add('hidden');
-      document.getElementById('main-app').classList.remove('hidden');
+      const navGuru = document.getElementById('nav-guru-portal');
+      const navPra = document.getElementById('nav-group-praprod');
+      const navProd = document.getElementById('nav-group-prod');
+      const navPasca = document.getElementById('nav-group-pascaprod');
+
+      if (user.role === 'guru') {
+        if (navGuru) navGuru.classList.remove('hidden');
+        if (navPra) navPra.classList.add('hidden');
+        if (navProd) navProd.classList.add('hidden');
+        if (navPasca) navPasca.classList.add('hidden');
+      } else {
+        if (navGuru) navGuru.classList.add('hidden');
+        if (navPra) navPra.classList.remove('hidden');
+        if (navProd) navProd.classList.remove('hidden');
+        if (navPasca) navPasca.classList.remove('hidden');
+      }
+
+      const loginScreen = document.getElementById('login-screen');
+      const mainApp = document.getElementById('main-app');
+      if (loginScreen) loginScreen.classList.add('hidden');
+      if (mainApp) mainApp.classList.remove('hidden');
 
       if (user.role === 'guru') {
         navigateTo('guru_portal');
@@ -1606,15 +1633,10 @@
         navigateTo('dashboard');
       }
 
-      // Restore submitted video preview if already uploaded
       if (AppState.project.submission && AppState.project.submission.localVideoUrl) {
-        const videoPlayer = document.getElementById('final-local-video');
-        const placeholder = document.getElementById('video-preview-placeholder');
-        if (videoPlayer && AppState.project.submission.localVideoUrl !== "LOCAL_STORED_VIDEO") {
-          videoPlayer.src = AppState.project.submission.localVideoUrl;
-          videoPlayer.classList.remove('hidden');
-          if (placeholder) placeholder.classList.add('hidden');
-        }
+        const inputUrl = document.getElementById('final-gdrive-url');
+        if (inputUrl) inputUrl.value = AppState.project.submission.localVideoUrl;
+        handleGoogleDriveUrlChange(AppState.project.submission.localVideoUrl);
       }
       if (AppState.project.submission && AppState.project.submission.posterUrl) {
         const box = document.getElementById('poster-preview-box');
@@ -1650,15 +1672,15 @@
       const guruForm = document.getElementById('form-guru');
 
       if (mode === 'siswa') {
-        siswaTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-xl bg-brand-600 text-white shadow transition-all";
-        guruTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all";
-        siswaForm.classList.remove('hidden');
-        guruForm.classList.add('hidden');
+        if (siswaTab) siswaTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-xl bg-brand-600 text-white shadow transition-all";
+        if (guruTab) guruTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all";
+        if (siswaForm) siswaForm.classList.remove('hidden');
+        if (guruForm) guruForm.classList.add('hidden');
       } else {
-        guruTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-xl bg-neon-violet text-white shadow transition-all";
-        siswaTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all";
-        guruForm.classList.remove('hidden');
-        siswaForm.classList.add('hidden');
+        if (guruTab) guruTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-xl bg-neon-violet text-white shadow transition-all";
+        if (siswaTab) siswaTab.className = "flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all";
+        if (guruForm) guruForm.classList.remove('hidden');
+        if (siswaForm) siswaForm.classList.add('hidden');
       }
     }
 
@@ -1666,9 +1688,9 @@
       event.preventDefault();
       
       if (role === 'siswa') {
-        const kelompok = document.getElementById('siswa-kelompok').value;
-        const kelas = document.getElementById('siswa-kelas').value;
-        const anggota = document.getElementById('siswa-anggota').value;
+        const kelompok = document.getElementById('siswa-kelompok')?.value || 'Kelompok Siswa';
+        const kelas = document.getElementById('siswa-kelas')?.value || 'SMK Broadcast';
+        const anggota = document.getElementById('siswa-anggota')?.value || '-';
 
         AppState.currentUser = { role: 'siswa', name: kelompok, class: kelas, members: anggota };
 
@@ -1691,7 +1713,7 @@
 
         showToast(`Sesi kelompok ${kelompok} tersimpan secara otomatis!`, 'success');
       } else {
-        const nama = document.getElementById('guru-nama').value || 'Pak Herman, S.Sn.';
+        const nama = document.getElementById('guru-nama')?.value || 'Pak Herman, S.Sn.';
         AppState.currentUser = { role: 'guru', name: nama, class: 'Guru Pembimbing', members: '-' };
         showToast(`Portal Guru Aktif: Selamat bertugas ${nama}`, 'info');
       }
@@ -1748,8 +1770,11 @@
       renderRubricEvaluasi();
       updateProgressMetrics();
 
-      document.getElementById('main-app').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
+      const mainApp = document.getElementById('main-app');
+      const loginScreen = document.getElementById('login-screen');
+      if (mainApp) mainApp.classList.add('hidden');
+      if (loginScreen) loginScreen.classList.remove('hidden');
+
       showToast('Sesi kelompok berhasil dibersihkan. Aplikasi siap untuk kelompok berikutnya!', 'info');
     }
 
@@ -1853,25 +1878,41 @@
       }
 
       const activeGroup = AppState.allGroups.find(g => g.id === AppState.selectedGroupId) || AppState.allGroups[0];
+      
+      const cardName = document.getElementById('guru-card-group-name');
+      const cardClass = document.getElementById('guru-card-group-class');
+      const cardMembers = document.getElementById('guru-card-group-members');
+      const cardProgress = document.getElementById('guru-card-group-progress');
+      const cardStatus = document.getElementById('guru-card-group-status');
+
       if (activeGroup) {
-        document.getElementById('guru-card-group-name').textContent = activeGroup.name;
-        document.getElementById('guru-card-group-class').textContent = `Kelas: ${activeGroup.class}`;
-        document.getElementById('guru-card-group-members').textContent = activeGroup.members;
-        document.getElementById('guru-card-group-progress').textContent = `${activeGroup.progress} Selesai`;
-        document.getElementById('guru-card-group-status').textContent = activeGroup.status;
+        if (cardName) cardName.textContent = activeGroup.name;
+        if (cardClass) cardClass.textContent = `Kelas: ${activeGroup.class}`;
+        if (cardMembers) cardMembers.textContent = activeGroup.members;
+        if (cardProgress) cardProgress.textContent = `${activeGroup.progress} Selesai`;
+        if (cardStatus) cardStatus.textContent = activeGroup.status;
       } else {
-        document.getElementById('guru-card-group-name').textContent = "Belum Ada Kelompok Terdaftar";
-        document.getElementById('guru-card-group-class').textContent = "Kelas: -";
-        document.getElementById('guru-card-group-members').textContent = "Belum ada kelompok yang terdaftar/login saat ini.";
-        document.getElementById('guru-card-group-progress').textContent = "0% Selesai";
-        document.getElementById('guru-card-group-status').textContent = "Belum Dimulai";
+        if (cardName) cardName.textContent = "Belum Ada Kelompok Terdaftar";
+        if (cardClass) cardClass.textContent = "Kelas: -";
+        if (cardMembers) cardMembers.textContent = "Belum ada kelompok yang terdaftar/login saat ini.";
+        if (cardProgress) cardProgress.textContent = "0% Selesai";
+        if (cardStatus) cardStatus.textContent = "Belum Dimulai";
       }
 
-      document.getElementById('guru-review-title').textContent = AppState.project.title || "Belum Ada Judul";
-      document.getElementById('guru-review-genre').textContent = AppState.project.theme ? `${AppState.project.genre} • ${AppState.project.theme}` : "- • -";
-      document.getElementById('guru-review-duration').textContent = AppState.project.targetAudience ? `${AppState.project.targetDuration} • ${AppState.project.targetAudience}` : "- • -";
-      document.getElementById('guru-review-concept').textContent = AppState.project.highConcept ? `"${AppState.project.highConcept}"` : "Belum diisi oleh siswa.";
-      document.getElementById('guru-review-synopsis').textContent = AppState.project.synopsis ? `"${AppState.project.synopsis}"` : "Belum diisi oleh siswa.";
+      const revTitle = document.getElementById('guru-review-title');
+      if (revTitle) revTitle.textContent = AppState.project.title || "Belum Ada Judul";
+
+      const revGenre = document.getElementById('guru-review-genre');
+      if (revGenre) revGenre.textContent = AppState.project.theme ? `${AppState.project.genre} • ${AppState.project.theme}` : "- • -";
+
+      const revDuration = document.getElementById('guru-review-duration');
+      if (revDuration) revDuration.textContent = AppState.project.targetAudience ? `${AppState.project.targetDuration} • ${AppState.project.targetAudience}` : "- • -";
+
+      const revConcept = document.getElementById('guru-review-concept');
+      if (revConcept) revConcept.textContent = AppState.project.highConcept ? `"${AppState.project.highConcept}"` : "Belum diisi oleh siswa.";
+
+      const revSynopsis = document.getElementById('guru-review-synopsis');
+      if (revSynopsis) revSynopsis.textContent = AppState.project.synopsis ? `"${AppState.project.synopsis}"` : "Belum diisi oleh siswa.";
 
       const guruNaskah = document.getElementById('guru-review-naskah');
       if (guruNaskah) {
@@ -1903,10 +1944,15 @@
           });
         }
 
-        document.getElementById('guru-shot-count').textContent = AppState.project.shotList.length;
-        const mins = Math.floor(totalDur / 60);
-        const secs = totalDur % 60;
-        document.getElementById('guru-total-timecode').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} TIMECODE`;
+        const shotCountElem = document.getElementById('guru-shot-count');
+        if (shotCountElem) shotCountElem.textContent = AppState.project.shotList.length;
+        
+        const timecodeElem = document.getElementById('guru-total-timecode');
+        if (timecodeElem) {
+          const mins = Math.floor(totalDur / 60);
+          const secs = totalDur % 60;
+          timecodeElem.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} TIMECODE`;
+        }
       }
 
       const sbGrid = document.getElementById('guru-storyboard-preview-grid');
@@ -1951,25 +1997,24 @@
         });
       }
 
-      // Fix Video & Poster rendering in Guru Monitor
-      const guruVideo = document.getElementById('guru-local-video');
+      const guruIframe = document.getElementById('guru-gdrive-embed');
       const guruPlaceholder = document.getElementById('guru-video-placeholder');
       const guruVideoBadge = document.getElementById('guru-video-status-badge');
       const guruPosterContainer = document.getElementById('guru-sub-poster-container');
 
-      if (guruVideo) {
-        if (AppState.project.submission && AppState.project.submission.localVideoUrl && AppState.project.submission.localVideoUrl !== "LOCAL_STORED_VIDEO") {
-          guruVideo.src = AppState.project.submission.localVideoUrl;
-          guruVideo.load();
-          guruVideo.classList.remove('hidden');
+      if (guruIframe) {
+        const embedUrl = getGoogleDriveEmbedUrl(AppState.project.submission.localVideoUrl);
+        if (embedUrl && embedUrl.includes('drive.google.com')) {
+          guruIframe.src = embedUrl;
+          guruIframe.classList.remove('hidden');
           if (guruPlaceholder) guruPlaceholder.classList.add('hidden');
           if (guruVideoBadge) {
             guruVideoBadge.textContent = "KARYA TERKUMPUL";
             guruVideoBadge.className = "px-3 py-1 bg-purple-950 text-neon-violet border border-purple-800 rounded-full text-xs font-mono font-bold";
           }
         } else {
-          guruVideo.src = '';
-          guruVideo.classList.add('hidden');
+          guruIframe.src = '';
+          guruIframe.classList.add('hidden');
           if (guruPlaceholder) guruPlaceholder.classList.remove('hidden');
           if (guruVideoBadge) {
             guruVideoBadge.textContent = "BELUM DIUNGGAH";
@@ -1986,8 +2031,11 @@
         }
       }
 
-      document.getElementById('guru-sub-title').textContent = AppState.project.submission.videoTitle || "Belum Ada Video";
-      document.getElementById('guru-sub-team').textContent = AppState.project.submission.teamMembers || "-";
+      const subTitleElem = document.getElementById('guru-sub-title');
+      if (subTitleElem) subTitleElem.textContent = AppState.project.submission.videoTitle || "Belum Ada Video";
+
+      const subTeamElem = document.getElementById('guru-sub-team');
+      if (subTeamElem) subTeamElem.textContent = AppState.project.submission.teamMembers || "-";
 
       const rubricList = document.getElementById('guru-rubric-interactive-list');
       if (rubricList) {
@@ -2131,14 +2179,22 @@
 
     function saveIdeForm(event) {
       if (event) event.preventDefault();
-      AppState.project.title = document.getElementById('ide-judul').value;
-      AppState.project.theme = document.getElementById('ide-tema').value;
-      AppState.project.genre = document.getElementById('ide-genre').value;
-      AppState.project.targetAudience = document.getElementById('ide-target').value;
-      AppState.project.targetDuration = document.getElementById('ide-durasi').value;
-      AppState.project.highConcept = document.getElementById('ide-utama').value;
-      AppState.project.synopsis = document.getElementById('ide-sinopsis').value;
-      AppState.project.naskah = document.getElementById('ide-naskah').value;
+      const jElem = document.getElementById('ide-judul');
+      if (jElem) AppState.project.title = jElem.value;
+      const tElem = document.getElementById('ide-tema');
+      if (tElem) AppState.project.theme = tElem.value;
+      const gElem = document.getElementById('ide-genre');
+      if (gElem) AppState.project.genre = gElem.value;
+      const tgElem = document.getElementById('ide-target');
+      if (tgElem) AppState.project.targetAudience = tgElem.value;
+      const dElem = document.getElementById('ide-durasi');
+      if (dElem) AppState.project.targetDuration = dElem.value;
+      const uElem = document.getElementById('ide-utama');
+      if (uElem) AppState.project.highConcept = uElem.value;
+      const sElem = document.getElementById('ide-sinopsis');
+      if (sElem) AppState.project.synopsis = sElem.value;
+      const nElem = document.getElementById('ide-naskah');
+      if (nElem) AppState.project.naskah = nElem.value;
 
       initIdeForm();
       saveSessionToStorage();
@@ -2198,8 +2254,10 @@
             <span>Klik tombol <b>"+ Tambah Shot Baru"</b> atau gunakan pilihan quick preset di atas untuk mulai merencanakan pengambilan gambar.</span>
           </div>
         `;
-        document.getElementById('shot-count-badge').textContent = '0';
-        document.getElementById('shot-total-duration').textContent = '00:00';
+        const countBadge = document.getElementById('shot-count-badge');
+        if (countBadge) countBadge.textContent = '0';
+        const durElem = document.getElementById('shot-total-duration');
+        if (durElem) durElem.textContent = '00:00';
         return;
       }
 
@@ -2300,11 +2358,13 @@
         container.appendChild(card);
       });
 
-      document.getElementById('shot-count-badge').textContent = AppState.project.shotList.length;
+      const countBadge = document.getElementById('shot-count-badge');
+      if (countBadge) countBadge.textContent = AppState.project.shotList.length;
 
       const minutes = Math.floor(totalDuration / 60);
       const seconds = totalDuration % 60;
-      document.getElementById('shot-total-duration').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      const durElem = document.getElementById('shot-total-duration');
+      if (durElem) durElem.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
 
     function addShotRow() {
@@ -2588,9 +2648,14 @@
       const total = AppState.project.shootingPreprod.length + AppState.project.shootingProd.length;
       const pct = Math.round((checkedCount / total) * 100);
 
-      document.getElementById('shooting-progress-text').textContent = `${checkedCount}/${total} tugas selesai — ${pct}%`;
-      document.getElementById('preprod-count').textContent = `${AppState.project.shootingPreprod.filter(i=>i.checked).length}/${AppState.project.shootingPreprod.length}`;
-      document.getElementById('prod-count').textContent = `${AppState.project.shootingProd.filter(i=>i.checked).length}/${AppState.project.shootingProd.length}`;
+      const progElem = document.getElementById('shooting-progress-text');
+      if (progElem) progElem.textContent = `${checkedCount}/${total} tugas selesai — ${pct}%`;
+      
+      const preCountElem = document.getElementById('preprod-count');
+      if (preCountElem) preCountElem.textContent = `${AppState.project.shootingPreprod.filter(i=>i.checked).length}/${AppState.project.shootingPreprod.length}`;
+      
+      const prodCountElem = document.getElementById('prod-count');
+      if (prodCountElem) prodCountElem.textContent = `${AppState.project.shootingProd.filter(i=>i.checked).length}/${AppState.project.shootingProd.length}`;
     }
 
     function toggleShootingCheck(type, id) {
@@ -2609,41 +2674,6 @@
       navigateTo('finalvideo');
     }
 
-    // Fix Video Upload handling using FileReader DataURL so it persists and plays across sessions/devices
-    function handleLocalVideoUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        showToast(`Memuat video "${file.name}" ke player...`, 'info');
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const dataUrl = e.target.result;
-          const videoPlayer = document.getElementById('final-local-video');
-          const placeholder = document.getElementById('video-preview-placeholder');
-          const filenameBox = document.getElementById('video-filename');
-          const filenameText = document.getElementById('video-filename-text');
-
-          if (videoPlayer) {
-            videoPlayer.src = dataUrl;
-            videoPlayer.load();
-            videoPlayer.classList.remove('hidden');
-            videoPlayer.play().catch(() => {});
-          }
-          if (placeholder) placeholder.classList.add('hidden');
-
-          if (filenameBox && filenameText) {
-            filenameText.textContent = `${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)`;
-            filenameBox.classList.remove('hidden');
-          }
-
-          AppState.project.submission.localVideoUrl = dataUrl;
-          saveSessionToStorage();
-          showToast(`Video "${file.name}" siap diputar di monitor & galeri!`, 'success');
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    // Fix Poster Upload handling
     function previewPosterImage(event) {
       const file = event.target.files[0];
       if (file) {
@@ -2703,8 +2733,85 @@
       showToast('Skor rubrik diperbarui!', 'info');
     }
 
-    /* GALERI KARYA SISWA LOGIC */
     let currentModalProject = null;
+    let pendingDeleteGroupId = null;
+
+    function promptDeleteGroup() {
+      if (AppState.currentUser.role !== 'guru') {
+        showToast('Hanya guru yang memiliki akses menghapus tugas!', 'warning');
+        return;
+      }
+      const currentGroup = AppState.allGroups.find(g => g.id === AppState.selectedGroupId);
+      const name = currentGroup ? currentGroup.name : 'kelompok ini';
+
+      pendingDeleteGroupId = AppState.selectedGroupId;
+      
+      const confirmText = document.getElementById('delete-confirm-text');
+      if (confirmText) confirmText.textContent = `Apakah Anda yakin ingin menghapus seluruh hasil pengerjaan tugas & video dari "${name}" secara permanen dari server database online?`;
+      
+      const confirmModal = document.getElementById('delete-confirm-modal');
+      if (confirmModal) confirmModal.classList.remove('hidden');
+    }
+
+    function promptDeleteGalleryItem(groupId) {
+      if (AppState.currentUser.role !== 'guru') {
+        showToast('Hanya guru yang memiliki akses menghapus karya!', 'warning');
+        return;
+      }
+      pendingDeleteGroupId = groupId;
+      let name = groupId;
+      if (AppState.onlineDataMap && AppState.onlineDataMap[groupId]) {
+        name = AppState.onlineDataMap[groupId].currentUser.name || groupId;
+      }
+      
+      const confirmText = document.getElementById('delete-confirm-text');
+      if (confirmText) confirmText.textContent = `Apakah Anda yakin ingin menghapus karya video "${name}" dari Galeri Siswa secara permanen?`;
+      
+      const confirmModal = document.getElementById('delete-confirm-modal');
+      if (confirmModal) confirmModal.classList.remove('hidden');
+    }
+
+    function promptDeleteModalItem() {
+      if (currentModalProject) {
+        promptDeleteGalleryItem(currentModalProject.id);
+      }
+    }
+
+    function closeDeleteModal() {
+      pendingDeleteGroupId = null;
+      const confirmModal = document.getElementById('delete-confirm-modal');
+      if (confirmModal) confirmModal.classList.add('hidden');
+    }
+
+    async function executeDeleteSubmission() {
+      const targetId = pendingDeleteGroupId;
+      if (!targetId) return;
+
+      closeDeleteModal();
+      closeGaleriModal();
+
+      if (window.db && window.firebaseFirestore) {
+        try {
+          const { doc, deleteDoc } = window.firebaseFirestore;
+          const docRef = doc(window.db, "pengiriman_tugas_siswa", targetId);
+          await deleteDoc(docRef);
+
+          delete AppState.onlineDataMap[targetId];
+          AppState.allGroups = AppState.allGroups.filter(g => g.id !== targetId);
+
+          if (AppState.selectedGroupId === targetId) {
+            AppState.selectedGroupId = AppState.allGroups[0] ? AppState.allGroups[0].id : '';
+          }
+
+          showToast('Karya & tugas berhasil dihapus secara permanen dari server!', 'success');
+          renderGuruFullReview();
+          renderGalleryCards();
+        } catch(err) {
+          console.error("Error deleting document:", err);
+          showToast('Gagal menghapus data dari server.', 'warning');
+        }
+      }
+    }
 
     function renderGalleryCards() {
       const grid = document.getElementById('galeri-cards-grid');
@@ -2713,7 +2820,6 @@
 
       let galleryList = [];
 
-      // Fetch online project submissions from Firebase
       if (AppState.onlineDataMap && Object.keys(AppState.onlineDataMap).length > 0) {
         Object.keys(AppState.onlineDataMap).forEach((key) => {
           const itemData = AppState.onlineDataMap[key];
@@ -2734,7 +2840,6 @@
         });
       }
 
-      // Local submitted project fallback
       if (galleryList.length === 0 && AppState.project.submission && AppState.project.submission.submitted && AppState.project.submission.localVideoUrl) {
         galleryList.push({
           id: 'submitted-current',
@@ -2806,10 +2911,17 @@
           </div>
 
           <div class="p-4 bg-slate-950/80 border-t border-white/10 flex items-center justify-between font-mono text-xs">
-            <span class="text-[11px] text-slate-500 truncate max-w-[180px]">${item.members}</span>
-            <button onclick="openGaleriModal('${item.id}')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-neon-cyan rounded-xl border border-neon-cyan/30 font-bold flex items-center gap-1.5 transition-all">
-              <i class="fa-solid fa-circle-play"></i> Putar Video
-            </button>
+            <span class="text-[11px] text-slate-500 truncate max-w-[150px]">${item.members}</span>
+            <div class="flex items-center gap-1.5">
+              ${AppState.currentUser.role === 'guru' ? `
+                <button onclick="promptDeleteGalleryItem('${item.id}')" title="Hapus Karya dari Galeri" class="px-2.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-neon-tally rounded-xl border border-rose-800/60 font-bold transition-all">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              ` : ''}
+              <button onclick="openGaleriModal('${item.id}')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-neon-cyan rounded-xl border border-neon-cyan/30 font-bold flex items-center gap-1.5 transition-all">
+                <i class="fa-solid fa-circle-play"></i> Putar Video
+              </button>
+            </div>
           </div>
         `;
         grid.appendChild(card);
@@ -2844,51 +2956,73 @@
       if (!item || !item.videoUrl) return;
       currentModalProject = item;
 
-      document.getElementById('modal-project-title').textContent = item.title;
-      document.getElementById('modal-group-name').textContent = item.groupName;
-      document.getElementById('modal-group-members').textContent = `Anggota: ${item.members}`;
-      document.getElementById('modal-project-desc').textContent = item.synopsis;
-      document.getElementById('modal-like-count').textContent = item.likes;
+      const titleElem = document.getElementById('modal-project-title');
+      if (titleElem) titleElem.textContent = item.title;
 
-      const player = document.getElementById('modal-video-player');
-      if (player) {
-        player.src = item.videoUrl;
-        player.load();
-        player.play().catch(() => {});
+      const groupElem = document.getElementById('modal-group-name');
+      if (groupElem) groupElem.textContent = item.groupName;
+
+      const memElem = document.getElementById('modal-group-members');
+      if (memElem) memElem.textContent = `Anggota: ${item.members}`;
+
+      const descElem = document.getElementById('modal-project-desc');
+      if (descElem) descElem.textContent = item.synopsis;
+
+      const likeElem = document.getElementById('modal-like-count');
+      if (likeElem) likeElem.textContent = item.likes;
+
+      const deleteBtn = document.getElementById('modal-guru-delete-btn');
+      if (deleteBtn) {
+        if (AppState.currentUser.role === 'guru') {
+          deleteBtn.classList.remove('hidden');
+        } else {
+          deleteBtn.classList.add('hidden');
+        }
       }
 
-      document.getElementById('galeri-video-modal').classList.remove('hidden');
+      const iframe = document.getElementById('modal-gdrive-embed');
+      if (iframe) {
+        iframe.src = getGoogleDriveEmbedUrl(item.videoUrl);
+      }
+
+      const modal = document.getElementById('galeri-video-modal');
+      if (modal) modal.classList.remove('hidden');
     }
 
     function closeGaleriModal() {
-      const player = document.getElementById('modal-video-player');
-      if (player) {
-        player.pause();
-        player.src = '';
+      const iframe = document.getElementById('modal-gdrive-embed');
+      if (iframe) {
+        iframe.src = '';
       }
-      document.getElementById('galeri-video-modal').classList.add('hidden');
+      const modal = document.getElementById('galeri-video-modal');
+      if (modal) modal.classList.add('hidden');
     }
 
     function toggleGalleryLike() {
       if (currentModalProject) {
         currentModalProject.likes += 1;
-        document.getElementById('modal-like-count').textContent = currentModalProject.likes;
+        const likeElem = document.getElementById('modal-like-count');
+        if (likeElem) likeElem.textContent = currentModalProject.likes;
         showToast('Terima kasih atas apresiasi karya temanmu! ❤️', 'success');
       }
     }
 
     function submitFinalVideo(e) {
       e.preventDefault();
-      if (!AppState.project.submission.localVideoUrl) {
-        showToast('Silakan upload file video dari galeri terlebih dahulu!', 'warning');
+      const gdriveUrl = document.getElementById('final-gdrive-url')?.value;
+      if (!gdriveUrl || !gdriveUrl.includes('drive.google.com')) {
+        showToast('Silakan tempelkan link Google Drive video yang valid!', 'warning');
         return;
       }
       AppState.project.submission.submitted = true;
-      AppState.project.submission.videoTitle = document.getElementById('final-title').value;
-      AppState.project.submission.teamMembers = document.getElementById('final-team').value;
+      AppState.project.submission.localVideoUrl = gdriveUrl;
+      const tElem = document.getElementById('final-title');
+      if (tElem) AppState.project.submission.videoTitle = tElem.value;
+      const mElem = document.getElementById('final-team');
+      if (mElem) AppState.project.submission.teamMembers = mElem.value;
 
       saveSessionToStorage();
-      showToast('🎉 Karya video berhasil dikumpulkan & terpublikasi di Galeri Karya Siswa!', 'success');
+      showToast('🎉 Link Google Drive karya berhasil dikumpulkan & dipasang di Galeri!', 'success');
       updateProgressMetrics();
       navigateTo('galeri');
     }
