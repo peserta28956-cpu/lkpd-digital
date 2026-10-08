@@ -56,7 +56,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Register Firestore globals
     window.db = db;
     window.firebaseFirestore = { doc, setDoc, getDoc, onSnapshot, collection, getDocs, deleteDoc };
     console.log("Firebase & Firestore Online Engine Ready!");
@@ -86,7 +85,6 @@
       background-attachment: fixed;
     }
 
-    /* Dynamic Gradient Text Styling for Bold Elements */
     .font-bold, .font-extrabold, .font-black, .font-semibold, b, strong {
       background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 45%, #a5b4fc 100%);
       -webkit-background-clip: text;
@@ -130,13 +128,11 @@
       background-clip: text;
     }
 
-    /* Form input fields override */
     input, select, textarea {
       -webkit-text-fill-color: initial !important;
       background-clip: initial !important;
     }
 
-    /* Glassmorphism Card Style */
     .glass-card {
       background: rgba(30, 41, 59, 0.65);
       backdrop-filter: blur(14px);
@@ -154,13 +150,11 @@
       box-shadow: 0 15px 35px -10px rgba(139, 92, 246, 0.25);
     }
 
-    /* Studio Neon Glows */
     .glow-violet { box-shadow: 0 0 18px rgba(139, 92, 246, 0.45); }
     .glow-violet:hover { box-shadow: 0 0 25px rgba(139, 92, 246, 0.65); }
     .glow-cyan { box-shadow: 0 0 18px rgba(6, 182, 212, 0.45); }
     .glow-cyan:hover { box-shadow: 0 0 25px rgba(6, 182, 212, 0.65); }
 
-    /* Tally Light Animations */
     .tally-dot {
       width: 8px;
       height: 8px;
@@ -188,6 +182,25 @@
     ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      #sidebar, header, #toast-container, button, .no-print {
+        display: none !important;
+      }
+      .view-panel {
+        display: block !important;
+      }
+      .glass-card {
+        background: none !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        color: #000 !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-studio-base text-slate-100 h-full flex flex-col antialiased selection:bg-neon-violet selection:text-white">
@@ -202,29 +215,32 @@
       <div class="p-8 md:p-12 flex flex-col justify-between bg-gradient-to-tr from-slate-950 via-indigo-950/80 to-slate-900 border-b md:border-b-0 md:border-r border-white/10 relative">
         <div>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan text-xs font-mono font-bold uppercase tracking-widest mb-6">
+            <span class="tally-dot"></span> STUDIO VIRTUAL CONTROL ROOM
           </div>
           <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-3">
             Studio <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-brand-400 to-neon-violet">Produksi Digital</span>
           </h1>
-          <p class="text-slate-300 text-base font-medium text-justify">“Media Pembelajaran Interaktif untuk Membimbing Peserta Didik dalam Produksi Video”</p>
-          <p class="text-slate-400 text-xs font-mono mt-1 text-neon-violet">Rencanakan. Produksi. Edit. Publikasikan.</p>
+          <p class="text-slate-300 text-sm font-medium text-justify leading-relaxed">
+            Media Pembelajaran Interaktif & Lembar Kerja Peserta Didik (LKPD) Digital untuk memandu produksi karya audio-visual siswa secara sistematis.
+          </p>
+          <p class="text-slate-400 text-xs font-mono mt-3 text-neon-violet">Rencanakan • Produksi • Edit • Publikasikan</p>
         </div>
 
         <div class="my-8 flex justify-center py-4 relative">
-          <div class="w-44 h-44 rounded-full bg-slate-900/90 border-2 border-neon-cyan/40 flex items-center justify-center relative shadow-2xl glow-cyan">
-            <i class="fa-solid fa-video text-6xl text-neon-cyan"></i>
-            <div class="absolute -top-2 -right-2 w-11 h-11 bg-neon-violet rounded-full flex items-center justify-center text-xs text-white shadow-lg font-mono font-bold">
+          <div class="w-40 h-40 rounded-full bg-slate-900/90 border-2 border-neon-cyan/40 flex items-center justify-center relative shadow-2xl glow-cyan">
+            <i class="fa-solid fa-video text-5xl text-neon-cyan"></i>
+            <div class="absolute -top-2 -right-2 w-10 h-10 bg-neon-violet rounded-full flex items-center justify-center text-xs text-white shadow-lg font-mono font-bold">
               <i class="fa-solid fa-film"></i>
             </div>
-            <div class="absolute -bottom-2 -left-2 w-11 h-11 bg-brand-600 rounded-full flex items-center justify-center text-xs text-white shadow-lg font-mono font-bold">
+            <div class="absolute -bottom-2 -left-2 w-10 h-10 bg-brand-600 rounded-full flex items-center justify-center text-xs text-white shadow-lg font-mono font-bold">
               <i class="fa-solid fa-cut"></i>
             </div>
           </div>
         </div>
 
         <div class="text-[11px] font-mono text-slate-400 flex items-center justify-between border-t border-white/10 pt-4">
-          <span><i class="fa-solid fa-shield-halved text-neon-cyan mr-1"></i> Digital Studio Assistant</span>
-        
+          <span><i class="fa-solid fa-shield-halved text-neon-cyan mr-1"></i> Digital Studio Assistant v2.0</span>
+          <span class="text-emerald-400 flex items-center gap-1"><span class="tally-green"></span> Online Sync Ready</span>
         </div>
       </div>
 
@@ -245,22 +261,22 @@
             <div>
               <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1">Nama / No. Kelompok</label>
               <div class="relative">
-                <i class="fa-solid fa-users absolute left-3.5 top-3.5 text-slate-500 text-sm"></i>
-                <input type="text" id="siswa-kelompok" required placeholder="Contoh: Kelompok 1" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan">
+                <i class="fa-solid fa-users absolute left-3.5 top-3 text-slate-500 text-sm"></i>
+                <input type="text" id="siswa-kelompok" required placeholder="Contoh: Kelompok 1" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan">
               </div>
             </div>
             <div>
               <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1">Kelas</label>
-              <input type="text" id="siswa-kelas" required placeholder="Contoh: XI BPF 1" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan">
+              <input type="text" id="siswa-kelas" required placeholder="Contoh: XI BPF 1" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan">
             </div>
           </div>
 
           <div>
             <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1">Nama Anggota Kelompok</label>
-            <textarea id="siswa-anggota" rows="3" required placeholder="Tuliskan nama seluruh anggota kelompok..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan"></textarea>
+            <textarea id="siswa-anggota" rows="3" required placeholder="Tuliskan nama seluruh anggota kelompok..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan"></textarea>
           </div>
 
-          <button type="submit" class="w-full py-3 bg-gradient-to-r from-brand-600 to-neon-violet hover:from-brand-500 hover:to-neon-violet text-white font-bold rounded-xl glow-violet transition-all flex items-center justify-center gap-2 mt-4">
+          <button type="submit" class="w-full py-3 bg-gradient-to-r from-brand-600 to-neon-violet hover:from-brand-500 hover:to-neon-violet text-white font-bold rounded-xl glow-violet transition-all flex items-center justify-center gap-2 mt-4 text-xs font-mono">
             <span>Mulai Studio Produksi</span>
             <i class="fa-solid fa-arrow-right text-xs"></i>
           </button>
@@ -271,21 +287,21 @@
           <div>
             <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1">Nama Guru Pembimbing</label>
             <div class="relative">
-              <i class="fa-solid fa-user-tie absolute left-3.5 top-3.5 text-slate-500 text-sm"></i>
-              <input type="text" id="guru-nama" placeholder="Contoh: Pak Herman, S.Sn." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-neon-violet">
+              <i class="fa-solid fa-user-tie absolute left-3.5 top-3 text-slate-500 text-sm"></i>
+              <input type="text" id="guru-nama" placeholder="Contoh: Pak Herman, S.Sn." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-violet">
             </div>
           </div>
 
           <div>
             <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1">Kata Sandi Guru</label>
             <div class="relative">
-              <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-500 text-sm"></i>
-              <input type="password" id="guru-pass" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-neon-violet">
+              <i class="fa-solid fa-key absolute left-3.5 top-3 text-slate-500 text-sm"></i>
+              <input type="password" id="guru-pass" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-violet">
             </div>
             <p class="text-[11px] font-mono text-slate-500 mt-1">*Sandi Guru: <code class="text-neon-cyan">guru123</code></p>
           </div>
 
-          <button type="submit" class="w-full py-3 bg-gradient-to-r from-neon-violet to-indigo-600 hover:from-neon-violet hover:to-indigo-500 text-white font-bold rounded-xl glow-violet transition-all flex items-center justify-center gap-2 mt-4">
+          <button type="submit" class="w-full py-3 bg-gradient-to-r from-neon-violet to-indigo-600 hover:from-neon-violet hover:to-indigo-500 text-white font-bold rounded-xl glow-violet transition-all flex items-center justify-center gap-2 mt-4 text-xs font-mono">
             <span>Masuk Dashboard Guru</span>
             <i class="fa-solid fa-right-to-bracket text-xs"></i>
           </button>
@@ -388,6 +404,9 @@
               <button id="nav-guru-portal" onclick="navigateTo('guru_portal')" class="hidden nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-neon-amber bg-neon-amber/10 border border-neon-amber/30">
                 <i class="fa-solid fa-chalkboard-user w-5 text-center text-neon-amber"></i> Monitor Guru
               </button>
+              <button onclick="printLKPDReport()" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-slate-400 hover:text-neon-cyan hover:bg-slate-900 font-mono">
+                <i class="fa-solid fa-print w-5 text-center text-neon-cyan"></i> Cetak Dokumen LKPD
+              </button>
             </div>
           </div>
         </nav>
@@ -444,6 +463,11 @@
             <span id="header-progress-text" class="text-xs font-mono font-bold text-neon-cyan">0%</span>
           </div>
 
+          <button onclick="printLKPDReport()" class="hidden md:flex items-center gap-1.5 px-3 py-1 bg-slate-900 hover:bg-slate-800 text-xs font-mono text-slate-300 border border-white/10 rounded-full transition-all">
+            <i class="fa-solid fa-file-arrow-down text-neon-cyan"></i>
+            <span>Export LKPD</span>
+          </button>
+
           <div id="autosave-status" class="flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-800/60">
             <span class="tally-green"></span>
             <span class="hidden sm:inline">LIVE SYNC</span>
@@ -462,7 +486,7 @@
                 <span class="tally-dot"></span> BROADCAST DIGITAL ASSISTANT
               </div>
               <h1 id="dash-greeting" class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Halo! Siap membuat karya hari ini?</h1>
-              <p class="text-slate-300 text-xs md:text-sm mt-2 leading-relaxed">Bimbing ide kreatifmu secara sistematis dari pra-produksi, persiapan kamera shooting, hingga pasca-produksi editing.</p>
+              <p class="text-slate-300 text-xs md:text-sm mt-2 leading-relaxed">Pandu ide kreatifmu secara bertahap: mulai dari naskah pra-produksi, shot list kamera, checklist shooting, hingga publikasi video final.</p>
 
               <div class="mt-6 bg-slate-950/80 p-4 rounded-2xl border border-white/10">
                 <div class="flex justify-between items-center text-xs font-mono mb-2">
@@ -488,7 +512,7 @@
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">PHASE 1</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Ide & Sinopsis</h3>
-                <p class="text-xs text-slate-400 mt-1 line-clamp-2 text-justify">Pengembangan konsep cerita, genre, target penonton, dan sinopsis awal karya film/iklan.</p>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Pengembangan konsep cerita, genre, target penonton, dan naskah skenario video.</p>
               </div>
               <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neon-cyan">
                 <span>Buka Modul</span>
@@ -503,7 +527,7 @@
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">PHASE 1</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Shot List</h3>
-                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Atur parameter shot size (EWS-ECU), angle kamera, movement, dan estimasi timecode durasi.</p>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Atur parameter shot size (EWS-ECU), angle kamera, movement, dan estimasi durasi adegan.</p>
               </div>
               <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neon-cyan">
                 <span>Atur Shot Matrix</span>
@@ -518,7 +542,7 @@
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">PHASE 1</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Storyboard Board</h3>
-                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Visualisasikan adegan frame demi frame, sketsa visual, dialog audio, dan drag-drop urutan visual.</p>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Visualisasikan adegan frame demi frame, unggah visual sketsa, dialog, dan urutkan frame.</p>
               </div>
               <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neon-violet">
                 <span>Susun Storyboard</span>
@@ -548,7 +572,7 @@
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-slate-400 border border-white/10">FINAL</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Final Video Submission</h3>
-                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Unggah poster/thumbnail cover, masukkan video karya langsung dari galeri, dan kirimkan ke pembimbing.</p>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Tautkan link karya (Google Drive/YouTube), unggah poster karya, dan kirimkan ke pembimbing.</p>
               </div>
               <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-brand-400">
                 <span>Kirim Video Final</span>
@@ -563,7 +587,7 @@
                   <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950 text-neon-cyan border border-neon-cyan/30">SHOWCASE</span>
                 </div>
                 <h3 class="text-lg font-bold text-white transition-colors">Galeri Karya Siswa</h3>
-                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Bioskop mini studio. Eksplorasi dan tonton video karya kelompok lain serta berikan apresiasi.</p>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Bioskop mini studio. Tonton karya seluruh kelompok dan berikan apresiasi secara daring.</p>
               </div>
               <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neon-cyan">
                 <span>Lihat Semua Karya</span>
@@ -580,8 +604,8 @@
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-neon-amber text-xs font-mono font-bold mb-2">
                 🎯 PHASE 1: PRA-PRODUKSI
               </div>
-              <h1 class="text-xl md:text-2xl font-bold text-white">Pengembangan Ide & Sinopsis</h1>
-              <p class="text-xs text-slate-400">Rumuskan ide utama dan fondasi cerita sebelum masuk ke aspek teknis kamera.</p>
+              <h1 class="text-xl md:text-2xl font-bold text-white">Pengembangan Ide, Sinopsis & Naskah</h1>
+              <p class="text-xs text-slate-400">Rumuskan ide utama dan fondasi cerita sebelum masuk ke perancangan teknis kamera.</p>
             </div>
             
             <button onclick="loadDemoPreset()" class="px-4 py-2.5 bg-slate-900 text-neon-cyan hover:bg-slate-800 rounded-xl text-xs font-mono font-semibold border border-neon-cyan/30 transition-all flex items-center gap-2 shrink-0">
@@ -595,21 +619,22 @@
 
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Judul Proyek Video</label>
-                <input type="text" id="ide-judul" required placeholder="Masukkan judul proyek video..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white focus:outline-none focus:border-neon-cyan">
+                <input type="text" id="ide-judul" required placeholder="Masukkan judul proyek video..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-neon-cyan">
               </div>
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Tema</label>
-                  <input type="text" id="ide-tema" placeholder="Edukasi / Promosi" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white focus:outline-none focus:border-neon-cyan">
+                  <input type="text" id="ide-tema" placeholder="Edukasi / Promosi" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-neon-cyan">
                 </div>
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Genre</label>
-                  <select id="ide-genre" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white focus:outline-none focus:border-neon-cyan">
+                  <select id="ide-genre" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-neon-cyan">
                     <option value="Iklan Komersial / Promosi">Iklan Komersial / Promosi</option>
                     <option value="Film Pendek Drama">Film Pendek Drama</option>
                     <option value="Dokumenter Mini">Dokumenter Mini</option>
                     <option value="Company Profile">Company Profile</option>
+                    <option value="Vlog Edukasi">Vlog Edukasi</option>
                   </select>
                 </div>
               </div>
@@ -617,11 +642,11 @@
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Target Penonton</label>
-                  <input type="text" id="ide-target" placeholder="Contoh: Siswa, Orang Tua" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white focus:outline-none focus:border-neon-cyan">
+                  <input type="text" id="ide-target" placeholder="Contoh: Remaja, Umum" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-neon-cyan">
                 </div>
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Target Durasi</label>
-                  <input type="text" id="ide-durasi" placeholder="Contoh: 2-3 Menit" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white font-mono focus:outline-none focus:border-neon-cyan">
+                  <input type="text" id="ide-durasi" placeholder="Contoh: 2-3 Menit" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white font-mono focus:outline-none focus:border-neon-cyan">
                 </div>
               </div>
             </div>
@@ -632,33 +657,32 @@
 
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Ide Utama / High Concept</label>
-                  <textarea id="ide-utama" rows="2" placeholder="Jelaskan pesan inti atau keunikan cerita dalam 2-3 kalimat..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-neon-cyan"></textarea>
+                  <textarea id="ide-utama" rows="2" placeholder="Jelaskan pesan inti atau keunikan cerita dalam 2-3 kalimat..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-neon-cyan"></textarea>
                 </div>
 
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Sinopsis Lengkap (Alur 3 Babak)</label>
-                  <textarea id="ide-sinopsis" rows="3" placeholder="Awal → Tengah → Akhir cerita..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-neon-cyan"></textarea>
+                  <textarea id="ide-sinopsis" rows="3" placeholder="Awal → Konflik/Tengah → Resolusi Akhir cerita..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-neon-cyan"></textarea>
                 </div>
 
-                <!-- Kolom Penulisan Naskah Video -->
                 <div>
                   <div class="flex items-center justify-between mb-1.5 flex-wrap gap-2">
                     <label class="block text-xs font-mono font-bold uppercase text-neon-cyan flex items-center gap-1.5">
-                      <i class="fa-solid fa-scroll text-neon-cyan"></i> Kolom Penulisan Naskah Video (Screenplay / Script)
+                      <i class="fa-solid fa-scroll text-neon-cyan"></i> Kolom Penulisan Naskah Video (Screenplay)
                     </label>
                     <div class="flex gap-1.5 font-mono text-[10px]">
                       <button type="button" onclick="insertScriptTag('SCENE')" class="px-2 py-0.5 bg-slate-900 border border-white/10 hover:bg-slate-800 text-neon-amber rounded font-bold">+ SCENE</button>
                       <button type="button" onclick="insertScriptTag('VISUAL')" class="px-2 py-0.5 bg-slate-900 border border-white/10 hover:bg-slate-800 text-neon-cyan rounded font-bold">+ VISUAL</button>
-                      <button type="button" onclick="insertScriptTag('AUDIO')" class="px-2 py-0.5 bg-slate-900 border border-white/10 hover:bg-slate-800 text-neon-violet rounded font-bold">+ AUDIO/DIALOG</button>
+                      <button type="button" onclick="insertScriptTag('AUDIO')" class="px-2 py-0.5 bg-slate-900 border border-white/10 hover:bg-slate-800 text-neon-violet rounded font-bold">+ AUDIO</button>
                     </div>
                   </div>
-                  <textarea id="ide-naskah" rows="8" placeholder="Tuliskan naskah/skenario video lengkap di sini (Scene Heading, Deskripsi Visual, Audio/Dialog)..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-slate-200 focus:outline-none focus:border-neon-cyan leading-relaxed"></textarea>
+                  <textarea id="ide-naskah" rows="8" placeholder="Tuliskan naskah/skenario video lengkap di sini (Scene Heading, Visual Action, Audio/Dialog)..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-slate-200 focus:outline-none focus:border-neon-cyan leading-relaxed"></textarea>
                 </div>
               </div>
 
               <div class="flex items-center justify-between pt-4 border-t border-white/10">
                 <button type="button" onclick="navigateTo('dashboard')" class="px-4 py-2.5 rounded-xl border border-white/10 text-xs font-mono font-semibold text-slate-400 hover:text-white hover:bg-slate-900">
-                  <i class="fa-solid fa-chevron-left mr-1"></i> Kembali
+                  <i class="fa-solid fa-chevron-left mr-1"></i> Dashboard
                 </button>
 
                 <div class="flex items-center gap-3">
@@ -693,7 +717,7 @@
               </div>
               <div class="h-10 w-px bg-white/10"></div>
               <div class="text-center px-3">
-                <span class="text-[10px] uppercase font-bold text-slate-500 block tracking-widest">TIMECODE ESTIMATION</span>
+                <span class="text-[10px] uppercase font-bold text-slate-500 block tracking-widest">EST. TIMECODE</span>
                 <span id="shot-total-duration" class="text-2xl font-black text-neon-violet">00:00</span>
               </div>
             </div>
@@ -707,7 +731,7 @@
                 </div>
                 <div>
                   <h3 class="text-sm font-mono font-bold text-white flex items-center gap-2">Studio Shot List Cards</h3>
-          
+                  <span class="text-[11px] text-slate-400">Atur rincian visual per frame</span>
                 </div>
               </div>
 
@@ -720,7 +744,7 @@
               </div>
             </div>
 
-            <!-- Individual Embedded Shot Cards Container -->
+            <!-- Cards Container -->
             <div id="shot-cards-container" class="space-y-4"></div>
           </div>
 
@@ -748,7 +772,7 @@
                 🎨 PHASE 1: STORYBOARD BOARD
               </div>
               <h1 class="text-xl md:text-2xl font-bold text-white">Creative Storyboard Board</h1>
-              <p class="text-xs text-slate-400">Visualisasikan adegan. Unggah sketsa/foto, atur urutan adegan dengan drag-and-drop.</p>
+              <p class="text-xs text-slate-400">Visualisasikan adegan. Unggah sketsa/foto, tentukan dialog audio, dan drag-drop urutan adegan.</p>
             </div>
 
             <button onclick="addStoryboardFrame()" class="px-4 py-2.5 bg-gradient-to-r from-neon-violet to-brand-600 text-white rounded-xl text-xs font-bold glow-violet transition-all flex items-center gap-2 shrink-0">
@@ -782,7 +806,7 @@
                 <span class="tally-dot"></span> PHASE 2: PRODUKSI SHOOTING
               </div>
               <h1 class="text-xl md:text-2xl font-bold text-white">Checklist Lapangan Shooting</h1>
-              <p class="text-xs text-slate-400">Verifikasi kesiapan kamera, audio, lighting, dan standar adegan di lokasi.</p>
+              <p class="text-xs text-slate-400">Verifikasi kesiapan kamera, audio, lighting, dan standar adegan sebelum dan selama take di lokasi.</p>
             </div>
 
             <div class="bg-slate-950 p-3 rounded-2xl border border-white/10 flex items-center gap-3 font-mono">
@@ -834,7 +858,7 @@
               🎬 FINAL SUBMISSION & PUBLISH
             </div>
             <h1 class="text-xl md:text-2xl font-bold text-white">Pengumpulan Karya Final Video</h1>
-            <p class="text-xs text-slate-400">Tautkan link Google Drive video karya dan unggah poster/thumbnail karya akhir untuk dinilai.</p>
+            <p class="text-xs text-slate-400">Tautkan link video Google Drive atau YouTube dan unggah poster karya akhir untuk dinilai.</p>
           </div>
 
           <form id="form-final-submission" onsubmit="submitFinalVideo(event)" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -843,23 +867,23 @@
 
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Judul Video Final</label>
-                <input type="text" id="final-title" required value="" placeholder="Masukkan judul video final..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white focus:outline-none focus:border-brand-500">
+                <input type="text" id="final-title" required placeholder="Masukkan judul video final..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-brand-500">
               </div>
 
               <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Anggota Kelompok</label>
-                <input type="text" id="final-team" required value="" placeholder="Sebutkan nama-nama anggota kelompok..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-sm text-white focus:outline-none focus:border-brand-500">
+                <input type="text" id="final-team" required placeholder="Sebutkan nama-nama anggota kelompok..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-brand-500">
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Link Google Drive Video Final</label>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Link Google Drive / YouTube Video</label>
                 <div class="relative">
-                  <i class="fa-brands fa-google-drive absolute left-3.5 top-3.5 text-neon-cyan text-base"></i>
-                  <input type="url" id="final-gdrive-url" required oninput="handleGoogleDriveUrlChange(this.value)" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan font-mono">
+                  <i class="fa-solid fa-link absolute left-3.5 top-3.5 text-neon-cyan text-sm"></i>
+                  <input type="url" id="final-gdrive-url" required oninput="handleVideoUrlChange(this.value)" placeholder="https://drive.google.com/file/d/... atau https://youtu.be/..." class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-neon-cyan font-mono">
                 </div>
                 <p class="text-[11px] font-mono text-slate-400 mt-1.5 flex items-center gap-1">
                   <i class="fa-solid fa-circle-info text-neon-amber"></i>
-                  <span>Pastikan akses link diatur ke <b class="text-neon-cyan">"Siapa saja yang memiliki link" (Public)</b>.</span>
+                  <span>Untuk Google Drive pastikan diatur ke <b class="text-neon-cyan">"Siapa saja yang memiliki link" (Public)</b>.</span>
                 </p>
               </div>
 
@@ -874,9 +898,9 @@
                 </div>
               </div>
 
-              <button type="submit" class="w-full py-3 bg-gradient-to-r from-brand-600 to-neon-violet hover:from-brand-500 hover:to-neon-violet text-white font-bold rounded-xl glow-violet transition-all flex items-center justify-center gap-2 mt-4">
+              <button type="submit" class="w-full py-3 bg-gradient-to-r from-brand-600 to-neon-violet hover:from-brand-500 hover:to-neon-violet text-white font-bold rounded-xl glow-violet transition-all flex items-center justify-center gap-2 mt-4 text-xs font-mono">
                 <i class="fa-solid fa-paper-plane text-xs"></i>
-                <span>Kirim Karya Final ke Guru</span>
+                <span>Kirim Karya Final ke Guru & Galeri</span>
               </button>
             </div>
 
@@ -886,14 +910,14 @@
                 <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
                   <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">Monitor Ruang Kontrol Siaran</h3>
                   <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-neon-tally/20 text-neon-tally border border-neon-tally/30 flex items-center gap-1">
-                    <span class="tally-dot"></span> EMBED PREVIEW MONITOR
+                    <span class="tally-dot"></span> LIVE PLAYER PREVIEW
                   </span>
                 </div>
 
                 <div class="aspect-video bg-slate-950 rounded-2xl overflow-hidden border-2 border-neon-violet/50 relative flex items-center justify-center shadow-2xl">
                   <div id="video-preview-placeholder" class="text-center p-6 text-slate-500 font-mono text-xs">
-                    <i class="fa-brands fa-google-drive text-4xl mb-3 text-neon-cyan block"></i>
-                    <span class="text-slate-400">Tempelkan link Google Drive video di samping untuk menampilkan pemutar embed instan.</span>
+                    <i class="fa-brands fa-youtube text-4xl mb-3 text-neon-tally block"></i>
+                    <span class="text-slate-400">Tempelkan link Google Drive atau YouTube di sebelah kiri untuk memuat monitor player.</span>
                   </div>
                   <iframe id="final-gdrive-embed" class="w-full h-full border-0 hidden" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
@@ -917,7 +941,7 @@
                 🍿 STUDIO SHOWCASE GALERI
               </div>
               <h1 class="text-xl md:text-2xl font-bold text-white">Galeri Karya Video Siswa</h1>
-              <p class="text-xs text-slate-400">Pusat pemutaran karya film, iklan, dan dokumenter produksi siswa & kelompok SMK.</p>
+              <p class="text-xs text-slate-400">Pusat penayangan karya film pendek, iklan, dan vlog karya siswa & kelompok SMK.</p>
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
@@ -932,6 +956,7 @@
                 <option value="Film Pendek Drama">Film Pendek</option>
                 <option value="Dokumenter Mini">Dokumenter Mini</option>
                 <option value="Company Profile">Company Profile</option>
+                <option value="Vlog Edukasi">Vlog Edukasi</option>
               </select>
             </div>
           </div>
@@ -947,7 +972,7 @@
                 ⭐ ASSESSMENT & EVALUASI
               </div>
               <h1 class="text-xl md:text-2xl font-bold text-white">Rubrik Evaluasi Karya Penyiaran</h1>
-              <p class="text-xs text-slate-400">Penilaian 7 standar aspek sinematografi dan catatan feedback dari guru pembimbing.</p>
+              <p class="text-xs text-slate-400">Penilaian 7 standar aspek sinematografi dan catatan feedback langsung dari guru pembimbing.</p>
             </div>
 
             <div class="bg-slate-950 px-5 py-3 rounded-2xl border border-white/10 font-mono text-center shrink-0">
@@ -1009,7 +1034,7 @@
                 <span class="text-3xl">🎥</span>
                 <div>
                   <h4 class="text-xs font-bold text-white">Shooting Ready</h4>
-                  <span class="text-[10px] text-neon-tally">Checklist Terverifikasi</span>
+                  <span class="text-[10px] text-neon-tally">Checklist Lengkap</span>
                 </div>
               </div>
 
@@ -1040,15 +1065,14 @@
                 <span class="tally-dot"></span> PORTAL KONTROL GURU PEMBIMBING
               </div>
               <h1 id="guru-greeting-title" class="text-xl md:text-2xl font-bold text-white">Selamat Bertugas, Guru Pembimbing!</h1>
-              <p class="text-xs text-slate-400 mt-1">Pantau secara utuh seluruh hasil pengerjaan tugas siswa dari Pra-Produksi hingga Pasca-Produksi.</p>
+              <p class="text-xs text-slate-400 mt-1">Pantau dan nilai secara menyeluruh tugas siswa mulai dari Pra-Produksi hingga Video Final.</p>
             </div>
             
             <div class="flex items-center gap-3 bg-slate-950 p-3 rounded-2xl border border-white/10 shrink-0">
               <i class="fa-solid fa-users text-neon-cyan text-xl"></i>
               <div>
-                <label class="block text-[10px] font-mono uppercase text-slate-500 font-bold">Pilih Kelompok & Anggota Siswa:</label>
+                <label class="block text-[10px] font-mono uppercase text-slate-500 font-bold">Pilih Kelompok Siswa:</label>
                 <select id="guru-student-selector" onchange="switchStudentReview(this.value)" class="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer max-w-xs truncate">
-                  <!-- Dynamically populated in JS -->
                 </select>
               </div>
             </div>
@@ -1190,8 +1214,8 @@
                 <div class="lg:col-span-2 space-y-3">
                   <div class="aspect-video bg-slate-950 rounded-2xl overflow-hidden border-2 border-neon-violet/50 relative flex items-center justify-center shadow-2xl">
                     <div id="guru-video-placeholder" class="text-center p-6 text-slate-500 font-mono text-xs">
-                      <i class="fa-brands fa-google-drive text-4xl mb-3 text-neon-cyan block"></i>
-                      <span class="text-slate-400">Siswa belum memasukkan link Google Drive video final.</span>
+                      <i class="fa-solid fa-play text-4xl mb-3 text-neon-cyan block"></i>
+                      <span class="text-slate-400">Siswa belum memasukkan link video final.</span>
                     </div>
                     <iframe id="guru-gdrive-embed" class="w-full h-full border-0 hidden" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                   </div>
@@ -1231,9 +1255,9 @@
             </div>
 
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-3">
-              <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-cyan border-b border-white/10 pb-2">Berikan Catatan & Evaluasi Pembimbing</h3>
+              <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-neon-cyan border-b border-white/10 pb-2">Catatan & Evaluasi Guru Pembimbing</h3>
               <textarea id="guru-feedback-input" rows="3" placeholder="Tuliskan catatan apresiasi, masukan teknik sinematografi, atau evaluasi perbaikan untuk kelompok siswa ini..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-neon-cyan leading-relaxed"></textarea>
-              <button onclick="saveGuruAssessment()" class="px-6 py-3 bg-gradient-to-r from-neon-violet to-brand-600 hover:from-neon-violet hover:to-brand-500 text-white text-xs font-bold rounded-xl glow-violet flex items-center gap-2">
+              <button onclick="saveGuruAssessment()" class="px-6 py-3 bg-gradient-to-r from-neon-violet to-brand-600 hover:from-neon-violet hover:to-brand-500 text-white text-xs font-bold rounded-xl glow-violet flex items-center gap-2 font-mono">
                 <i class="fa-solid fa-floppy-disk"></i> Simpan & Kirim Nilai ke Siswa
               </button>
             </div>
@@ -1313,9 +1337,8 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT APP LOGIC -->
+  <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
-    // Global Application State Object
     window.AppState = {
       currentUser: { role: 'siswa', name: '', class: '', members: '' },
       currentView: 'dashboard',
@@ -1353,9 +1376,11 @@
           teamMembers: '',
           localVideoUrl: '',
           posterUrl: '',
-          description: ''
+          description: '',
+          likes: 0
         },
         evaluation: {
+          feedback: '',
           aspects: [
             { name: 'Kesesuaian Storyboard', desc: 'Visualisasi adegan sesuai rancangan storyboard', score: 0 },
             { name: 'Teknik Pengambilan Gambar', desc: 'Variasi shot size, camera angle, dan movement', score: 0 },
@@ -1369,11 +1394,18 @@
       }
     };
 
-    function getGoogleDriveEmbedUrl(url) {
+    // Helper: Convert Google Drive or YouTube URL to iframe embed src
+    function getMediaEmbedUrl(url) {
       if (!url) return '';
-      const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        return `https://drive.google.com/file/d/${match[1]}/preview`;
+      // YouTube Embed
+      const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+      if (ytMatch && ytMatch[1]) {
+        return `https://www.youtube.com/embed/${ytMatch[1]}`;
+      }
+      // Google Drive Embed
+      const gdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (gdMatch && gdMatch[1]) {
+        return `https://drive.google.com/file/d/${gdMatch[1]}/preview`;
       }
       if (url.includes('drive.google.com') && url.includes('/preview')) {
         return url;
@@ -1381,12 +1413,12 @@
       return url;
     }
 
-    function handleGoogleDriveUrlChange(url) {
-      const embedUrl = getGoogleDriveEmbedUrl(url);
+    function handleVideoUrlChange(url) {
+      const embedUrl = getMediaEmbedUrl(url);
       const iframe = document.getElementById('final-gdrive-embed');
       const placeholder = document.getElementById('video-preview-placeholder');
 
-      if (embedUrl && embedUrl.includes('drive.google.com')) {
+      if (embedUrl && (embedUrl.includes('drive.google.com') || embedUrl.includes('youtube.com'))) {
         if (iframe) {
           iframe.src = embedUrl;
           iframe.classList.remove('hidden');
@@ -1433,17 +1465,13 @@
     function loadSavedSession() {
       try {
         const savedUser = localStorage.getItem('s2v_session');
-        if (savedUser) {
-          AppState.currentUser = JSON.parse(savedUser);
-        }
+        if (savedUser) AppState.currentUser = JSON.parse(savedUser);
+        
         const savedProject = localStorage.getItem('s2v_project');
-        if (savedProject) {
-          AppState.project = JSON.parse(savedProject);
-        }
+        if (savedProject) AppState.project = JSON.parse(savedProject);
+        
         const savedGroups = localStorage.getItem('s2v_groups');
-        if (savedGroups) {
-          AppState.allGroups = JSON.parse(savedGroups);
-        }
+        if (savedGroups) AppState.allGroups = JSON.parse(savedGroups);
       } catch(e) {
         console.warn("Load session error:", e);
       }
@@ -1465,6 +1493,14 @@
       if (window.startOnlineSync) {
         window.startOnlineSync();
       }
+
+      // Close modal on Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeGaleriModal();
+          closeDeleteModal();
+        }
+      });
     };
 
     window.startOnlineSync = function() {
@@ -1510,10 +1546,13 @@
               status: data.project && data.project.submission && data.project.submission.submitted ? 'Karya Terkumpul' : 'Proses Produksi'
             });
 
+            // Update evaluation live for current logged in student
             if (AppState.currentUser.role === 'siswa' && AppState.currentUser.name === gName) {
               if (data.project && data.project.evaluation) {
                 AppState.project.evaluation = data.project.evaluation;
                 renderRubricEvaluasi();
+                const evalElem = document.getElementById('eval-feedback-text');
+                if (evalElem) evalElem.value = data.project.evaluation.feedback || '';
               }
             }
           }
@@ -1552,10 +1591,6 @@
           const docRef = window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", sanitizedDocId);
           
           const projectClone = JSON.parse(JSON.stringify(AppState.project));
-          if (projectClone.submission && projectClone.submission.localVideoUrl && projectClone.submission.localVideoUrl.length > 700000) {
-            projectClone.submission.localVideoUrl = "LOCAL_STORED_VIDEO";
-          }
-
           const payload = {
             currentUser: AppState.currentUser,
             project: projectClone,
@@ -1565,7 +1600,7 @@
           await window.firebaseFirestore.setDoc(docRef, payload, { merge: true });
         }
       } catch(e) {
-        console.warn("Storage error handling:", e);
+        console.warn("Storage sync error:", e);
       }
     }
 
@@ -1632,14 +1667,28 @@
         navigateTo('dashboard');
       }
 
+      // Pre-fill submission inputs
+      const finalTitle = document.getElementById('final-title');
+      if (finalTitle && !finalTitle.value && AppState.project.title) {
+        finalTitle.value = AppState.project.title;
+      }
+      const finalTeam = document.getElementById('final-team');
+      if (finalTeam && !finalTeam.value && user.members) {
+        finalTeam.value = user.members;
+      }
+
       if (AppState.project.submission && AppState.project.submission.localVideoUrl) {
         const inputUrl = document.getElementById('final-gdrive-url');
         if (inputUrl) inputUrl.value = AppState.project.submission.localVideoUrl;
-        handleGoogleDriveUrlChange(AppState.project.submission.localVideoUrl);
+        handleVideoUrlChange(AppState.project.submission.localVideoUrl);
       }
       if (AppState.project.submission && AppState.project.submission.posterUrl) {
         const box = document.getElementById('poster-preview-box');
         if (box) box.innerHTML = `<img src="${AppState.project.submission.posterUrl}" class="w-full h-full object-cover">`;
+      }
+      if (AppState.project.evaluation && AppState.project.evaluation.feedback) {
+        const evalElem = document.getElementById('eval-feedback-text');
+        if (evalElem) evalElem.value = AppState.project.evaluation.feedback;
       }
     }
 
@@ -1653,7 +1702,7 @@
       } else if (tagType === 'VISUAL') {
         tagText = `VISUAL:\nCamera [Shot Size & Angle] memperlihatkan...\n`;
       } else if (tagType === 'AUDIO') {
-        tagText = `AUDIO / DIALOG:\nNAMA_KARAKTER (V.O / DIALOG)\n"Ketik dialog atau suara latar di sini..."\n`;
+        tagText = `AUDIO / DIALOG:\nNAMA_KARAKTER (V.O / DIALOG)\n"Ketik dialog atau efek suara di sini..."\n`;
       }
 
       const startPos = textarea.selectionStart;
@@ -1687,9 +1736,9 @@
       event.preventDefault();
       
       if (role === 'siswa') {
-        const kelompok = document.getElementById('siswa-kelompok')?.value || 'Kelompok Siswa';
-        const kelas = document.getElementById('siswa-kelas')?.value || 'SMK Broadcast';
-        const anggota = document.getElementById('siswa-anggota')?.value || '-';
+        const kelompok = document.getElementById('siswa-kelompok')?.value.trim() || 'Kelompok Siswa';
+        const kelas = document.getElementById('siswa-kelas')?.value.trim() || 'SMK Broadcast';
+        const anggota = document.getElementById('siswa-anggota')?.value.trim() || '-';
 
         AppState.currentUser = { role: 'siswa', name: kelompok, class: kelas, members: anggota };
 
@@ -1710,11 +1759,16 @@
           AppState.selectedGroupId = newGroupId;
         }
 
-        showToast(`Sesi kelompok ${kelompok} tersimpan secara otomatis!`, 'success');
+        showToast(`Sesi kelompok ${kelompok} aktif!`, 'success');
       } else {
-        const nama = document.getElementById('guru-nama')?.value || 'Pak Herman, S.Sn.';
+        const pass = document.getElementById('guru-pass')?.value;
+        if (pass !== 'guru123') {
+          showToast('Kata sandi guru salah! Gunakan: guru123', 'warning');
+          return;
+        }
+        const nama = document.getElementById('guru-nama')?.value.trim() || 'Pak Herman, S.Sn.';
         AppState.currentUser = { role: 'guru', name: nama, class: 'Guru Pembimbing', members: '-' };
-        showToast(`Portal Guru Aktif: Selamat bertugas ${nama}`, 'info');
+        showToast(`Portal Guru Aktif: Selamat datang ${nama}`, 'info');
       }
 
       saveSessionToStorage();
@@ -1751,8 +1805,8 @@
         storyboard: [],
         shootingPreprod: AppState.project.shootingPreprod.map(i => ({...i, checked: false})),
         shootingProd: AppState.project.shootingProd.map(i => ({...i, checked: false})),
-        submission: { submitted: false, videoTitle: '', teamMembers: '', localVideoUrl: '', posterUrl: '', description: '' },
-        evaluation: { aspects: AppState.project.evaluation.aspects.map(a => ({...a, score: 0})) }
+        submission: { submitted: false, videoTitle: '', teamMembers: '', localVideoUrl: '', posterUrl: '', description: '', likes: 0 },
+        evaluation: { feedback: '', aspects: AppState.project.evaluation.aspects.map(a => ({...a, score: 0})) }
       };
 
       const kelompokInput = document.getElementById('siswa-kelompok');
@@ -1774,7 +1828,7 @@
       if (mainApp) mainApp.classList.add('hidden');
       if (loginScreen) loginScreen.classList.remove('hidden');
 
-      showToast('Sesi kelompok berhasil dibersihkan. Aplikasi siap untuk kelompok berikutnya!', 'info');
+      showToast('Sesi kelompok berhasil dibersihkan.', 'info');
     }
 
     function navigateTo(viewId) {
@@ -1893,7 +1947,7 @@
       } else {
         if (cardName) cardName.textContent = "Belum Ada Kelompok Terdaftar";
         if (cardClass) cardClass.textContent = "Kelas: -";
-        if (cardMembers) cardMembers.textContent = "Belum ada kelompok yang terdaftar/login saat ini.";
+        if (cardMembers) cardMembers.textContent = "Belum ada kelompok yang terdaftar saat ini.";
         if (cardProgress) cardProgress.textContent = "0% Selesai";
         if (cardStatus) cardStatus.textContent = "Belum Dimulai";
       }
@@ -1963,7 +2017,7 @@
         if (AppState.project.storyboard.length === 0) {
           sbGrid.innerHTML = `<div class="col-span-full p-4 text-center font-mono text-xs text-slate-500 bg-slate-950 rounded-xl border border-white/5">Belum ada frame storyboard yang dibuat oleh siswa.</div>`;
         } else {
-          AppState.project.storyboard.forEach((f, idx) => {
+          AppState.project.storyboard.forEach((f) => {
             const card = document.createElement('div');
             card.className = "bg-slate-950 rounded-2xl overflow-hidden border border-white/10 text-xs font-mono";
             card.innerHTML = `
@@ -2002,8 +2056,8 @@
       const guruPosterContainer = document.getElementById('guru-sub-poster-container');
 
       if (guruIframe) {
-        const embedUrl = getGoogleDriveEmbedUrl(AppState.project.submission.localVideoUrl);
-        if (embedUrl && embedUrl.includes('drive.google.com')) {
+        const embedUrl = getMediaEmbedUrl(AppState.project.submission.localVideoUrl);
+        if (embedUrl && (embedUrl.includes('drive.google.com') || embedUrl.includes('youtube.com'))) {
           guruIframe.src = embedUrl;
           guruIframe.classList.remove('hidden');
           if (guruPlaceholder) guruPlaceholder.classList.add('hidden');
@@ -2036,34 +2090,42 @@
       const subTeamElem = document.getElementById('guru-sub-team');
       if (subTeamElem) subTeamElem.textContent = AppState.project.submission.teamMembers || "-";
 
-      const rubricList = document.getElementById('guru-rubric-interactive-list');
-      if (rubricList) {
-        rubricList.innerHTML = '';
-        let totalRub = 0;
-
-        AppState.project.evaluation.aspects.forEach((asp, idx) => {
-          totalRub += asp.score;
-          const row = document.createElement('div');
-          row.className = "p-3 bg-slate-950 rounded-2xl border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs";
-          row.innerHTML = `
-            <div>
-              <span class="font-bold text-white block">${idx + 1}. ${asp.name}</span>
-              <span class="text-slate-400 text-[11px]">${asp.desc}</span>
-            </div>
-            <div class="flex items-center gap-1 font-mono shrink-0">
-              ${[1, 2, 3, 4].map(num => `
-                <button onclick="setRubricScore(${idx}, ${num})" class="w-7 h-7 rounded-lg font-bold text-xs ${asp.score === num ? 'bg-brand-600 text-white shadow glow-violet' : 'bg-slate-900 text-slate-500 hover:bg-slate-800'}">
-                  ${num}
-                </button>
-              `).join('')}
-            </div>
-          `;
-          rubricList.appendChild(row);
-        });
-
-        const totalRubricElem = document.getElementById('guru-rubric-total');
-        if (totalRubricElem) totalRubricElem.textContent = `${totalRub} / 28`;
+      const guruFeedbackInput = document.getElementById('guru-feedback-input');
+      if (guruFeedbackInput) {
+        guruFeedbackInput.value = AppState.project.evaluation.feedback || '';
       }
+
+      renderGuruRubricList();
+    }
+
+    function renderGuruRubricList() {
+      const rubricList = document.getElementById('guru-rubric-interactive-list');
+      if (!rubricList) return;
+      rubricList.innerHTML = '';
+      let totalRub = 0;
+
+      AppState.project.evaluation.aspects.forEach((asp, idx) => {
+        totalRub += asp.score;
+        const row = document.createElement('div');
+        row.className = "p-3 bg-slate-950 rounded-2xl border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs";
+        row.innerHTML = `
+          <div>
+            <span class="font-bold text-white block">${idx + 1}. ${asp.name}</span>
+            <span class="text-slate-400 text-[11px]">${asp.desc}</span>
+          </div>
+          <div class="flex items-center gap-1.5 font-mono shrink-0">
+            ${[1, 2, 3, 4].map(num => `
+              <button onclick="setRubricScore(${idx}, ${num})" class="w-8 h-8 rounded-lg font-bold text-xs transition-all ${asp.score === num ? 'bg-brand-600 text-white shadow glow-violet scale-105' : 'bg-slate-900 text-slate-500 hover:bg-slate-800 border border-white/5'}">
+                ${num}
+              </button>
+            `).join('')}
+          </div>
+        `;
+        rubricList.appendChild(row);
+      });
+
+      const totalRubricElem = document.getElementById('guru-rubric-total');
+      if (totalRubricElem) totalRubricElem.textContent = `${totalRub} / 28`;
     }
 
     function switchStudentReview(groupId) {
@@ -2076,7 +2138,7 @@
       }
       const targetGroup = AppState.allGroups.find(g => g.id === groupId);
       if (targetGroup) {
-        showToast(`Memuat tugas ${targetGroup.name} (${targetGroup.members})...`, 'info');
+        showToast(`Memuat data ${targetGroup.name}...`, 'info');
       }
       renderGuruFullReview();
     }
@@ -2084,12 +2146,13 @@
     async function saveGuruAssessment() {
       const feedbackInput = document.getElementById('guru-feedback-input');
       const evalElem = document.getElementById('eval-feedback-text');
-      if (feedbackInput && evalElem) {
-        evalElem.value = feedbackInput.value;
+      if (feedbackInput) {
+        AppState.project.evaluation.feedback = feedbackInput.value;
+        if (evalElem) evalElem.value = feedbackInput.value;
       }
 
       const selectedId = AppState.selectedGroupId;
-      if (selectedId && AppState.onlineDataMap[selectedId] && window.db && window.firebaseFirestore) {
+      if (selectedId && window.db && window.firebaseFirestore) {
         const docRef = window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", selectedId);
         await window.firebaseFirestore.setDoc(docRef, {
           project: { evaluation: AppState.project.evaluation }
@@ -2097,7 +2160,8 @@
       }
 
       saveSessionToStorage();
-      showToast('Penilaian & Feedback Guru berhasil disinkronkan secara online!', 'success');
+      renderRubricEvaluasi();
+      showToast('Penilaian & Feedback Guru berhasil disimpan!', 'success');
     }
 
     function toggleSidebar() {
@@ -2120,7 +2184,7 @@
         warning: 'fa-triangle-exclamation text-neon-amber'
       };
 
-      toast.className = "pointer-events-auto flex items-center gap-3 bg-slate-950 text-white px-4 py-3 rounded-2xl shadow-2xl border border-white/10 text-xs font-mono font-semibold";
+      toast.className = "pointer-events-auto flex items-center gap-3 bg-slate-950 text-white px-4 py-3 rounded-2xl shadow-2xl border border-white/10 text-xs font-mono font-semibold transition-all transform translate-y-2";
       toast.innerHTML = `
         <i class="fa-solid ${icons[type] || icons.success} text-base"></i>
         <span>${message}</span>
@@ -2128,7 +2192,8 @@
 
       container.appendChild(toast);
       setTimeout(() => {
-        toast.remove();
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
 
@@ -2138,23 +2203,23 @@
         status.style.opacity = '1';
         setTimeout(() => {
           status.style.opacity = '0.8';
-        }, 1000);
+        }, 800);
       }
     }
 
     function loadDemoPreset() {
-      AppState.project.title = "Video Promosi Produk Sekolah";
-      AppState.project.theme = "Kuliner Vokasi";
+      AppState.project.title = "Video Promosi Produk Roti Sekolah";
+      AppState.project.theme = "Kuliner Vokasi SMK";
       AppState.project.genre = "Iklan Komersial / Promosi";
-      AppState.project.targetAudience = "Calon Siswa & Wali Murid";
+      AppState.project.targetAudience = "Calon Siswa & Konsumen Umum";
       AppState.project.targetDuration = "2 Menit";
-      AppState.project.highConcept = "Menampilkan keahlian siswa Boga SMK membuat roti profesional dengan teknik ala chef.";
-      AppState.project.synopsis = "Video dibuka dengan keindahan dapur studio Boga. Siswa mempraktikkan whipping adonan, proses baking panas, hingga dekorasi akhir roti pastry.";
-      AppState.project.naskah = "SCENE 01 - INT. DAPUR BOGA - PAGI\nVISUAL: High angle establishing shot dapur bersih. Siswa memakai celemek chef profesional.\nAUDIO/DIALOG:\nNARRATOR (V.O)\n\"Di balik kelezatan roti berkualitas, ada ketelitian dan dedikasi tinggi calon koki muda SMK.\"";
+      AppState.project.highConcept = "Menampilkan keahlian siswa Tata Boga SMK membuat roti profesional dengan standar dapur modern.";
+      AppState.project.synopsis = "Awal video memperlihatkan suasana studio bakery yang bersih. Dilanjutkan proses pengulenan adonan, pemanggangan panas keemasan, hingga plating estetik.";
+      AppState.project.naskah = "SCENE 01 - INT. DAPUR BAKERY - PAGI\nVISUAL: High angle establishing shot dapur bersih. Siswa memakai celemek chef profesional.\nAUDIO/DIALOG:\nNARRATOR (V.O)\n\"Di balik kelezatan roti berkualitas, ada ketelitian dan dedikasi tinggi calon talenta muda.\"";
 
       initIdeForm();
       saveSessionToStorage();
-      showToast('Preset "Promosi Produk" berhasil dimuat!', 'info');
+      showToast('Preset demo berhasil dimuat!', 'info');
     }
 
     function initIdeForm() {
@@ -2250,7 +2315,7 @@
           <div class="text-center py-10 text-slate-500 font-mono text-xs glass-card rounded-2xl border border-white/5">
             <i class="fa-solid fa-list-check text-4xl mb-3 text-slate-700 block"></i>
             <span class="text-slate-300 font-bold block mb-1">Shot List Masih Kosong</span>
-            <span>Klik tombol <b>"+ Tambah Shot Baru"</b> atau gunakan pilihan quick preset di atas untuk mulai merencanakan pengambilan gambar.</span>
+            <span>Klik tombol <b>"+ Tambah Shot Baru"</b> atau gunakan tombol preset untuk merencanakan variasi pengambilan gambar.</span>
           </div>
         `;
         const countBadge = document.getElementById('shot-count-badge');
@@ -2333,23 +2398,23 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
               <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1 flex items-center gap-1">
-                <i class="fa-solid fa-eye text-neon-cyan text-xs"></i> Deskripsi Visual
+                <i class="fa-solid fa-eye text-neon-cyan text-xs"></i> Setting & Visual
               </label>
-              <textarea onchange="updateShot(${index}, 'visual', this.value)" rows="2" placeholder="Latar & setting visual..." class="w-full bg-slate-950 border border-slate-800 focus:border-neon-cyan rounded-xl p-2.5 text-xs text-white focus:outline-none">${shot.visual}</textarea>
+              <textarea onchange="updateShot(${index}, 'visual', this.value)" rows="2" placeholder="Setting latar & tata letak subjek..." class="w-full bg-slate-950 border border-slate-800 focus:border-neon-cyan rounded-xl p-2.5 text-xs text-white focus:outline-none">${shot.visual}</textarea>
             </div>
 
             <div>
               <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1 flex items-center gap-1">
                 <i class="fa-solid fa-person-running text-neon-amber text-xs"></i> Adegan / Aksi
               </label>
-              <textarea onchange="updateShot(${index}, 'adegan', this.value)" rows="2" placeholder="Aksi atau pergerakan pemain..." class="w-full bg-slate-950 border border-slate-800 focus:border-neon-cyan rounded-xl p-2.5 text-xs text-white focus:outline-none">${shot.adegan}</textarea>
+              <textarea onchange="updateShot(${index}, 'adegan', this.value)" rows="2" placeholder="Aksi pemain atau blocking kamera..." class="w-full bg-slate-950 border border-slate-800 focus:border-neon-cyan rounded-xl p-2.5 text-xs text-white focus:outline-none">${shot.adegan}</textarea>
             </div>
 
             <div>
               <label class="block text-[11px] font-mono font-bold uppercase text-slate-400 mb-1 flex items-center gap-1">
-                <i class="fa-solid fa-volume-high text-neon-violet text-xs"></i> Audio / Dialog
+                <i class="fa-solid fa-volume-high text-neon-violet text-xs"></i> Audio / SFX
               </label>
-              <textarea onchange="updateShot(${index}, 'audio', this.value)" rows="2" placeholder="Audio latar / dialog / SFX..." class="w-full bg-slate-950 border border-slate-800 focus:border-neon-cyan rounded-xl p-2.5 text-xs text-white focus:outline-none">${shot.audio}</textarea>
+              <textarea onchange="updateShot(${index}, 'audio', this.value)" rows="2" placeholder="Dialog karakter / musik latar..." class="w-full bg-slate-950 border border-slate-800 focus:border-neon-cyan rounded-xl p-2.5 text-xs text-white focus:outline-none">${shot.audio}</textarea>
             </div>
           </div>
         `;
@@ -2421,7 +2486,7 @@
       AppState.project.shotList.splice(index, 1);
       renderShotTable();
       saveSessionToStorage();
-      showToast('Shot berhasil dihapus', 'info');
+      showToast('Shot dihapus', 'info');
     }
 
     function saveShotList() {
@@ -2445,7 +2510,7 @@
           <div class="col-span-full text-center py-12 text-slate-500 font-mono text-xs glass-card rounded-2xl border border-white/5">
             <i class="fa-solid fa-border-all text-4xl mb-3 text-slate-700 block"></i>
             <span class="text-slate-300 font-bold block mb-1">Storyboard Masih Kosong</span>
-            <span>Klik tombol <b>"+ Tambah Frame Visual"</b> untuk mulai membuat frame adegan pertama kamu.</span>
+            <span>Klik tombol <b>"+ Tambah Frame Visual"</b> untuk membuat frame gambar adegan.</span>
           </div>
         `;
         return;
@@ -2464,7 +2529,7 @@
             <div class="relative aspect-video bg-slate-950 overflow-hidden group/img">
               <img id="sb-img-${frame.id}" src="${frame.image}" alt="Storyboard Frame" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                <label class="px-3 py-1.5 bg-brand-600 text-white rounded-xl text-xs font-bold cursor-pointer hover:bg-brand-500 shadow glow-violet">
+                <label class="px-3 py-1.5 bg-brand-600 text-white rounded-xl text-xs font-bold cursor-pointer hover:bg-brand-500 shadow glow-violet font-mono">
                   <i class="fa-solid fa-upload mr-1"></i> Upload Image
                   <input type="file" accept="image/*" class="hidden" onchange="uploadFrameImage(event, '${frame.id}')">
                 </label>
@@ -2495,7 +2560,7 @@
               </div>
 
               <div>
-                <label class="block text-[10px] font-mono font-bold uppercase text-slate-400">Visual</label>
+                <label class="block text-[10px] font-mono font-bold uppercase text-slate-400">Deskripsi Visual</label>
                 <textarea onchange="updateFrameField('${frame.id}', 'visual', this.value)" rows="2" placeholder="Visualisasi adegan..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-white focus:outline-none focus:border-neon-violet">${frame.visual}</textarea>
               </div>
 
@@ -2507,7 +2572,7 @@
           </div>
 
           <div class="p-3 bg-slate-950/80 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
-            <div class="flex items-center gap-1 cursor-grab" title="Drag and drop untuk urutan">
+            <div class="flex items-center gap-1 cursor-grab" title="Drag and drop urutan">
               <i class="fa-solid fa-grip-vertical text-neon-cyan"></i>
               <span class="text-[10px] font-semibold">Frame #${idx + 1}</span>
             </div>
@@ -2538,7 +2603,7 @@
         AppState.project.storyboard.splice(targetIdx, 0, item);
         renderStoryboardGrid();
         saveSessionToStorage();
-        showToast('Urutan frame diubah!', 'info');
+        showToast('Urutan frame diperbarui!', 'info');
       }
     }
 
@@ -2708,9 +2773,9 @@
 
           <div class="flex items-center gap-2 shrink-0 font-mono">
             ${[1, 2, 3, 4].map(num => `
-              <button onclick="setRubricScore(${idx}, ${num})" class="w-8 h-8 rounded-xl font-bold text-xs transition-all ${asp.score === num ? 'bg-brand-600 text-white shadow glow-violet' : 'bg-slate-900 text-slate-400 hover:bg-slate-800 border border-white/5'}">
+              <div class="w-8 h-8 rounded-xl font-bold text-xs flex items-center justify-center transition-all ${asp.score === num ? 'bg-brand-600 text-white shadow glow-violet' : 'bg-slate-900 text-slate-500 border border-white/5'}">
                 ${num}
-              </button>
+              </div>
             `).join('')}
           </div>
         `;
@@ -2723,10 +2788,11 @@
 
     function setRubricScore(aspectIdx, score) {
       if (AppState.currentUser.role !== 'guru') {
-        showToast('Hanya guru pembimbing yang dapat mengubah rubrik nilai!', 'warning');
+        showToast('Hanya guru pembimbing yang dapat memberikan nilai!', 'warning');
         return;
       }
       AppState.project.evaluation.aspects[aspectIdx].score = score;
+      renderGuruRubricList();
       renderRubricEvaluasi();
       saveSessionToStorage();
       showToast('Skor rubrik diperbarui!', 'info');
@@ -2746,7 +2812,7 @@
       pendingDeleteGroupId = AppState.selectedGroupId;
       
       const confirmText = document.getElementById('delete-confirm-text');
-      if (confirmText) confirmText.textContent = `Apakah Anda yakin ingin menghapus seluruh hasil pengerjaan tugas & video dari "${name}" secara permanen dari server database online?`;
+      if (confirmText) confirmText.textContent = `Apakah Anda yakin ingin menghapus seluruh hasil pengerjaan tugas & video dari "${name}" secara permanen?`;
       
       const confirmModal = document.getElementById('delete-confirm-modal');
       if (confirmModal) confirmModal.classList.remove('hidden');
@@ -2802,7 +2868,7 @@
             AppState.selectedGroupId = AppState.allGroups[0] ? AppState.allGroups[0].id : '';
           }
 
-          showToast('Karya & tugas berhasil dihapus secara permanen dari server!', 'success');
+          showToast('Karya berhasil dihapus permanen dari server database!', 'success');
           renderGuruFullReview();
           renderGalleryCards();
         } catch(err) {
@@ -2833,7 +2899,7 @@
               synopsis: itemData.project.synopsis || itemData.project.highConcept || 'Video produksi karya siswa SMK.',
               videoUrl: itemData.project.submission.localVideoUrl,
               posterUrl: itemData.project.submission.posterUrl || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&auto=format&fit=crop&q=80',
-              likes: itemData.project.submission.likes || 12
+              likes: itemData.project.submission.likes || 0
             });
           }
         });
@@ -2847,10 +2913,10 @@
           groupClass: AppState.currentUser.class || 'SMK Broadcast',
           members: AppState.project.submission.teamMembers || AppState.currentUser.members || 'Anggota Kelompok',
           genre: AppState.project.genre || 'Iklan Komersial / Promosi',
-          synopsis: AppState.project.synopsis || AppState.project.highConcept || 'Video produksi karya siswa SMK.',
+          synopsis: AppState.project.synopsis || itemData.project.highConcept || 'Video produksi karya siswa SMK.',
           videoUrl: AppState.project.submission.localVideoUrl,
           posterUrl: AppState.project.submission.posterUrl || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&auto=format&fit=crop&q=80',
-          likes: 12
+          likes: AppState.project.submission.likes || 0
         });
       }
 
@@ -2859,7 +2925,7 @@
 
       let filtered = galleryList.filter(item => {
         const matchesSearch = item.title.toLowerCase().includes(searchVal) || 
-                              item.groupName.toLowerCase().includes(searchVal) ||
+                              item.groupName.toLowerCase().includes(searchVal) || 
                               item.members.toLowerCase().includes(searchVal);
         const matchesGenre = genreVal === 'ALL' || item.genre === genreVal;
         return matchesSearch && matchesGenre;
@@ -2870,7 +2936,7 @@
           <div class="col-span-full p-12 text-center glass-card rounded-3xl border border-white/10 font-mono text-xs text-slate-500">
             <i class="fa-solid fa-photo-film text-5xl mb-3 text-slate-700 block"></i>
             <span class="text-slate-300 font-bold block mb-1">Belum Ada Karya Video Terpublikasi</span>
-            <span>Unggah file video kamu di menu <b>Final Video Submission</b> agar karya kelompokmu tampil di bioskop galeri ini secara online!</span>
+            <span>Kirim link video kamu di menu <b>Final Video Submission</b> agar karya kelompokmu tampil di galeri ini.</span>
           </div>
         `;
         return;
@@ -2938,7 +3004,7 @@
           members: itemData.project.submission.teamMembers || itemData.currentUser.members || 'Anggota Kelompok',
           synopsis: itemData.project.synopsis || itemData.project.highConcept || 'Video karya produksi siswa SMK.',
           videoUrl: itemData.project.submission.localVideoUrl,
-          likes: itemData.project.submission.likes || 12
+          likes: itemData.project.submission.likes || 0
         };
       } else if (projId === 'submitted-current') {
         item = {
@@ -2948,7 +3014,7 @@
           members: AppState.project.submission.teamMembers || AppState.currentUser.members || 'Anggota Kelompok',
           synopsis: AppState.project.synopsis || AppState.project.highConcept || 'Video karya produksi siswa SMK.',
           videoUrl: AppState.project.submission.localVideoUrl,
-          likes: 12
+          likes: AppState.project.submission.likes || 0
         };
       }
 
@@ -2981,7 +3047,7 @@
 
       const iframe = document.getElementById('modal-gdrive-embed');
       if (iframe) {
-        iframe.src = getGoogleDriveEmbedUrl(item.videoUrl);
+        iframe.src = getMediaEmbedUrl(item.videoUrl);
       }
 
       const modal = document.getElementById('galeri-video-modal');
@@ -2997,33 +3063,50 @@
       if (modal) modal.classList.add('hidden');
     }
 
-    function toggleGalleryLike() {
+    async function toggleGalleryLike() {
       if (currentModalProject) {
-        currentModalProject.likes += 1;
+        currentModalProject.likes = (currentModalProject.likes || 0) + 1;
         const likeElem = document.getElementById('modal-like-count');
         if (likeElem) likeElem.textContent = currentModalProject.likes;
-        showToast('Terima kasih atas apresiasi karya temanmu! ❤️', 'success');
+        
+        if (currentModalProject.id !== 'submitted-current' && window.db && window.firebaseFirestore) {
+          const docRef = window.firebaseFirestore.doc(window.db, "pengiriman_tugas_siswa", currentModalProject.id);
+          await window.firebaseFirestore.setDoc(docRef, {
+            project: { submission: { likes: currentModalProject.likes } }
+          }, { merge: true });
+        } else {
+          AppState.project.submission.likes = currentModalProject.likes;
+          saveSessionToStorage();
+        }
+
+        showToast('Apresiasi berhasil diberikan! ❤️', 'success');
       }
     }
 
     function submitFinalVideo(e) {
       e.preventDefault();
-      const gdriveUrl = document.getElementById('final-gdrive-url')?.value;
-      if (!gdriveUrl || !gdriveUrl.includes('drive.google.com')) {
-        showToast('Silakan tempelkan link Google Drive video yang valid!', 'warning');
+      const videoUrl = document.getElementById('final-gdrive-url')?.value.trim();
+      if (!videoUrl) {
+        showToast('Silakan tempelkan link video karya!', 'warning');
         return;
       }
       AppState.project.submission.submitted = true;
-      AppState.project.submission.localVideoUrl = gdriveUrl;
+      AppState.project.submission.localVideoUrl = videoUrl;
+      
       const tElem = document.getElementById('final-title');
       if (tElem) AppState.project.submission.videoTitle = tElem.value;
+      
       const mElem = document.getElementById('final-team');
       if (mElem) AppState.project.submission.teamMembers = mElem.value;
 
       saveSessionToStorage();
-      showToast('🎉 Link Google Drive karya berhasil dikumpulkan & dipasang di Galeri!', 'success');
+      showToast('Karya video final berhasil dikumpulkan!', 'success');
       updateProgressMetrics();
       navigateTo('galeri');
+    }
+
+    function printLKPDReport() {
+      window.print();
     }
   </script>
 </body>
